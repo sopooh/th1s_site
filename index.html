@@ -35,28 +35,43 @@ nav{display:flex;justify-content:space-between;align-items:baseline;padding-bott
 
 .body-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;flex:1}
 
-.stage{position:relative;position:sticky;top:24px;min-height:520px;align-self:start}
+/* Colonna sinistra: video a tutta altezza, a filo del bordo sinistro */
+.stage{
+  position:sticky;top:0;align-self:start;
+  height:100vh;margin-left:-32px;
+  background:var(--thumb);overflow:hidden;
+}
 .statement{
+  position:absolute;left:32px;bottom:48px;
   font-size:44px;line-height:1.15;letter-spacing:-.01em;font-weight:400;
   transition:opacity .3s;
 }
 .statement .dim{color:var(--muted)}
 .stage.active .statement{opacity:0}
 
-.now{position:absolute;top:0;left:0;opacity:0;visibility:hidden;transition:opacity .3s}
+.now{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .3s;color:var(--ink)}
 .stage.active .now{opacity:1;visibility:visible}
-.now .thumb{position:relative;width:300px;aspect-ratio:4/5;background:var(--thumb);display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden}
+.now .thumb{position:absolute;inset:0;background:var(--thumb);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .now .thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
 .now .thumb.playing video{opacity:1}
 .now .thumb span{font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--muted)}
-.reel{width:300px;display:flex;align-items:center;gap:12px;margin-bottom:20px;opacity:0;transition:opacity .2s;pointer-events:none}
+/* velatura minima in basso, solo per leggere il testo bianco */
+.now .thumb::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(to top,rgba(0,0,0,.35),rgba(0,0,0,0));opacity:0;transition:opacity .3s}
+.now .thumb.playing::after{opacity:1}
+
+.reel{position:absolute;top:24px;left:32px;display:flex;align-items:center;gap:12px;opacity:0;transition:opacity .2s;pointer-events:none}
 .reel.on{opacity:1;pointer-events:auto}
-.reel .count{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.reel button{border:0;background:none;padding:0;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;font-family:var(--sans);transition:color .2s}
-.reel button:hover{color:var(--ink)}
-.now .pid{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.now .pbrand{font-size:15px;letter-spacing:.02em;color:var(--muted);margin-top:8px}
+.reel .count{font-family:var(--mono);font-size:12px;color:inherit}
+.reel button{border:0;background:none;padding:4px;cursor:pointer;color:inherit;font-size:18px;line-height:1;font-family:var(--sans);opacity:.75;transition:opacity .2s}
+.reel button:hover{opacity:1}
+
+.caption{position:absolute;left:32px;right:32px;bottom:48px}
+.now .pid{font-family:var(--mono);font-size:12px}
+.now .pbrand{font-size:15px;letter-spacing:.02em;margin-top:8px}
 .now .ptitle{font-size:40px;line-height:1.1;letter-spacing:-.01em;margin-top:4px}
+
+/* con il video in riproduzione tutto il testo va in bianco */
+.now:has(.thumb.playing){color:#FFFFFF}
 
 .list{display:flex;flex-direction:column}
 .row{
@@ -83,6 +98,7 @@ footer{display:flex;justify-content:space-between;padding-top:12px;margin-top:48
 
 @media (max-width:820px){
   body{padding:20px}
+  .stage{margin-left:0}
   .body-grid{grid-template-columns:1fr;gap:32px}
   .labels{grid-template-columns:1fr;padding-bottom:24px}
   .labels .left{display:none}
@@ -126,9 +142,11 @@ footer{display:flex;justify-content:space-between;padding-top:12px;margin-top:48
         <span class="count" id="rcount"></span>
         <button id="rnext" aria-label="Video successivo">&rsaquo;</button>
       </div>
-      <div class="pid" id="p-id"></div>
-      <div class="pbrand" id="p-brand"></div>
-      <div class="ptitle" id="p-title"></div>
+      <div class="caption">
+        <div class="pid" id="p-id"></div>
+        <div class="pbrand" id="p-brand"></div>
+        <div class="ptitle" id="p-title"></div>
+      </div>
     </div>
   </div>
 
@@ -153,7 +171,7 @@ const data = [
   ["ITA", "Prada", "SS27 Post Show", "THIS26-023", "2026", ["THIS26-023_prada_ss27-post-show.mp4"], ""],
   ["FRA", "Miu Miu", "SS27 Tiktok Show", "THIS26-022", "2026", ["THIS26-022_A_miu-miu_ss27-tiktok-show_miumiu-1.mp4", "THIS26-022_B_miu-miu_ss27-tiktok-show_miumiu-2.mp4", "THIS26-022_C_miu-miu_ss27-tiktok-show_miumiu-3.mp4", "THIS26-022_D_miu-miu_ss27-tiktok-show_miumiu-4.mp4", "THIS26-022_E_miu-miu_ss27-tiktok-show_miumiu-5.mp4", "THIS26-022_F_miu-miu_ss27-tiktok-show_miumiu-6.mp4"], ""],
   ["GBR", "Church's", "Church's Club", "THIS26-021", "2026", ["THIS26-021_church-s_club.mp4"], ""],
-  ["FRA", "Miu Miu", "Literary Club", "THIS26-020", "2026", ["THIS26-020_miu-miu_literary-club.mp4"], ""],
+  ["ITA", "Prada", "SS27 Woman", "THIS26-020", "2026", ["THIS26-020_prada_ss27-woman.mp4"], ""],
   ["ITA", "Prada", "Sea Beyond", "THIS26-019", "2026", ["THIS26-019_prada_sea-beyond.mp4"], ""],
   ["FRA", "Prada", "Pradasphere Galleria", "THIS26-018", "2026", ["THIS26-018_A_prada_pradasphere-galleria_sana.mp4", "THIS26-018_B_prada_pradasphere-galleria_jaehyun.mp4", "THIS26-018_C_prada_pradasphere-galleria_leedohyun.mp4", "THIS26-018_D_prada_pradasphere-galleria_benedetta.mp4"], ""],
   ["GBR", "Church's", "SS26 Collateral", "THIS26-017", "2026", ["THIS26-017_A_church-s_ss26-collateral_new-formal-1.mp4", "THIS26-017_B_church-s_ss26-collateral_new-formal-2.mp4", "THIS26-017_C_church-s_ss26-collateral_new-formal-3.mp4", "THIS26-017_D_church-s_ss26-collateral_new-formal-4.mp4"], ""],
