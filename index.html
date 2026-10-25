@@ -45,11 +45,11 @@ nav{display:flex;justify-content:space-between;align-items:baseline;padding-bott
 
 .now{position:absolute;top:0;left:0;opacity:0;visibility:hidden;transition:opacity .3s}
 .stage.active .now{opacity:1;visibility:visible}
-.now .thumb{position:relative;width:220px;aspect-ratio:9/16;background:var(--thumb);display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden;transition:width .3s,aspect-ratio .3s}
+.now .thumb{position:relative;width:300px;aspect-ratio:4/5;background:var(--thumb);display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden}
 .now .thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
 .now .thumb.playing video{opacity:1}
 .now .thumb span{font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--muted)}
-.reel{width:220px;display:flex;align-items:center;gap:12px;margin-bottom:20px;opacity:0;transition:opacity .2s;pointer-events:none}
+.reel{width:300px;display:flex;align-items:center;gap:12px;margin-bottom:20px;opacity:0;transition:opacity .2s;pointer-events:none}
 .reel.on{opacity:1;pointer-events:auto}
 .reel .count{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .reel button{border:0;background:none;padding:0;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;font-family:var(--sans);transition:color .2s}
@@ -149,45 +149,65 @@ footer{display:flex;justify-content:space-between;padding-top:12px;margin-top:48
 
 <script>
 const data = [
-  ["USA", "Prada", "Prada Mode NYC", "THIS26-012", "2026", ["THIS26-012_prada_prada-mode-nyc.mp4"], ""],
-  ["GBR", "Church's", "FW26 Collateral", "THIS26-011", "2026", ["THIS26-011_church-s_fw26-collateral.mp4"], ""],
-  ["ITA", "Prada", "Making of Route", "THIS26-010", "2026", ["THIS26-010_prada_making-of-route.mp4"], ""],
-  ["FRA", "Miu Miu", "Literary Club", "THIS26-009", "2026", ["THIS26-009_miu-miu_literary-club.mp4"], ""],
-  ["ITA", "Prada", "Frames Insight", "THIS26-008", "2026", ["THIS26-008_prada_frames-insight.mp4"], ""],
-  ["ITA", "Prada", "Sea Beyond", "THIS26-007", "2026", ["THIS26-007_prada_sea-beyond.mp4"], ""],
-  ["ITA", "Prada", "Bonnie", "THIS26-006", "2026", ["THIS26-006_prada_bonnie.mp4"], ""],
-  ["ITA", "Prada", "Training Borse", "THIS26-005", "2026", ["THIS26-005_prada_training-borse.mp4"], ""],
-  ["ITA", "Prada", "Training May Issue", "THIS26-004", "2026", ["THIS26-004_prada_training-may-issue.mp4"], ""],
-  ["FRA", "Miu Miu", "FW26 Show", "THIS26-003", "2026", ["THIS26-003_miu-miu_fw26-show.mp4"], ""],
-  ["ITA", "Prada", "Transform Project", "THIS26-002", "2026", ["THIS26-002_prada_transform-project.mp4"], ""],
-  ["ITA", "Miu Miu", "Always On", "THIS26-001", "2026", ["THIS26-001_miu-miu_always-on.mp4"], ""],
-  ["LATAM", "Prada", "Re-Nylon Collateral", "THIS25-034", "2025", ["THIS25-034_prada_re-nylon-collateral.mp4"], ""],
-  ["UAE", "Prada", "Ramadan Campaign 25", "THIS25-033", "2025", ["THIS25-033_prada_ramadan-campaign-25.mp4"], ""],
-  ["APAC", "Prada", "Cafe Mi-Shang Ion", "THIS25-032", "2025", ["THIS25-032_prada_cafe-mi-shang-ion.mp4"], ""],
-  ["FRA", "Miu Miu", "SS26 Show", "THIS25-031", "2025", ["THIS25-031_miu-miu_ss26-show.mp4"], ""],
-  ["FRA", "Miu Miu", "SS26 Teaser", "THIS25-030", "2025", ["THIS25-030_miu-miu_ss26-teaser.mp4"], ""],
-  ["ITA", "Prada", "GRWM Sadie Sink", "THIS25-029", "2025", ["THIS25-029_prada_grwm-sadie-sink.mp4"], ""],
-  ["ITA", "Prada", "Factory Visit SS26", "THIS25-028", "2025", ["THIS25-028_prada_factory-visit-ss26.mp4"], ""],
-  ["GBR", "Church's", "Holiday 25", "THIS25-027", "2025", ["THIS25-027_church-s_holiday-25.mp4"], ""],
-  ["ITA", "Prada", "Teaser SS26", "THIS25-026", "2025", ["THIS25-026_prada_teaser-ss26.mp4"], ""],
-  ["ITA", "Prada", "Textile's Archive", "THIS25-025", "2025", ["THIS25-025_prada_textile-s-archive.mp4"], ""],
-  ["APAC", "Miu Miu", "Isetan", "THIS25-024", "2025", ["THIS25-024_miu-miu_isetan.mp4"], ""],
-  ["ITA", "Miu Miu", "Reverie Eyewear", "THIS25-023", "2025", ["THIS25-023_miu-miu_reverie-eyewear.mp4"], ""],
+  ["ITA", "Prada", "SS27 Show Woman", "THIS26-024", "2026", ["THIS26-024_A_prada_ss27-show-woman_benedetta-porcaroli.mp4", "THIS26-024_B_prada_ss27-show-woman_bo-bragason.mp4", "THIS26-024_C_prada_ss27-show-woman_charlie-damelio.mp4", "THIS26-024_D_prada_ss27-show-woman_chisa.mp4", "THIS26-024_E_prada_ss27-show-woman_chung.mp4", "THIS26-024_F_prada_ss27-show-woman_emilia-clarke.mp4", "THIS26-024_G_prada_ss27-show-woman_gabrielle-union-dwyane-wade.mp4", "THIS26-024_H_prada_ss27-show-woman_maya-hawke.mp4", "THIS26-024_I_prada_ss27-show-woman_naomi-ackie.mp4", "THIS26-024_J_prada_ss27-show-woman_naomi-watts.mp4", "THIS26-024_K_prada_ss27-show-woman_win-metawin.mp4", "THIS26-024_L_prada_ss27-show-woman_yang-mi.mp4"], ""],
+  ["ITA", "Prada", "SS27 Post Show", "THIS26-023", "2026", ["THIS26-023_prada_ss27-post-show.mp4"], ""],
+  ["FRA", "Miu Miu", "SS27 Tiktok Show", "THIS26-022", "2026", ["THIS26-022_A_miu-miu_ss27-tiktok-show_miumiu-1.mp4", "THIS26-022_B_miu-miu_ss27-tiktok-show_miumiu-2.mp4", "THIS26-022_C_miu-miu_ss27-tiktok-show_miumiu-3.mp4", "THIS26-022_D_miu-miu_ss27-tiktok-show_miumiu-4.mp4", "THIS26-022_E_miu-miu_ss27-tiktok-show_miumiu-5.mp4", "THIS26-022_F_miu-miu_ss27-tiktok-show_miumiu-6.mp4"], ""],
+  ["GBR", "Church's", "Church's Club", "THIS26-021", "2026", ["THIS26-021_church-s_club.mp4"], ""],
+  ["FRA", "Miu Miu", "Literary Club", "THIS26-020", "2026", ["THIS26-020_miu-miu_literary-club.mp4"], ""],
+  ["ITA", "Prada", "Sea Beyond", "THIS26-019", "2026", ["THIS26-019_prada_sea-beyond.mp4"], ""],
+  ["FRA", "Prada", "Pradasphere Galleria", "THIS26-018", "2026", ["THIS26-018_A_prada_pradasphere-galleria_sana.mp4", "THIS26-018_B_prada_pradasphere-galleria_jaehyun.mp4", "THIS26-018_C_prada_pradasphere-galleria_leedohyun.mp4", "THIS26-018_D_prada_pradasphere-galleria_benedetta.mp4"], ""],
+  ["GBR", "Church's", "SS26 Collateral", "THIS26-017", "2026", ["THIS26-017_A_church-s_ss26-collateral_new-formal-1.mp4", "THIS26-017_B_church-s_ss26-collateral_new-formal-2.mp4", "THIS26-017_C_church-s_ss26-collateral_new-formal-3.mp4", "THIS26-017_D_church-s_ss26-collateral_new-formal-4.mp4"], ""],
+  ["GBR", "Church's", "Sunday Morning", "THIS26-016", "2026", ["THIS26-016_A_church-s_sunday-morning.mp4", "THIS26-016_B_church-s_sunday-morning.mp4"], ""],
+  ["ITA", "Miu Miu", "Miu Miu Tales 2026", "THIS26-015", "2026", ["THIS26-015_A_miu-miu_tales-2026_venezia-26-youtube.mp4", "THIS26-015_B_miu-miu_tales-2026_venezia-26-tiktok-1.mp4", "THIS26-015_C_miu-miu_tales-2026_venezia-26-tiktok-2.mp4", "THIS26-015_D_miu-miu_tales-2026_venezia-26-tiktok-3.mp4", "THIS26-015_E_miu-miu_tales-2026_icons-ecom-1.mp4", "THIS26-015_F_miu-miu_tales-2026_icons-ecom-2.mp4", "THIS26-015_G_miu-miu_tales-2026_icons-ecom-3.mp4"], ""],
+  ["ITA", "Miu Miu", "Literary Club", "THIS26-014", "2026", ["THIS26-014_A_miu-miu_literary-club_teaser-26.mp4", "THIS26-014_B_miu-miu_literary-club_video-pills1-26.mp4", "THIS26-014_C_miu-miu_literary-club_video-pills2-26.mp4", "THIS26-014_D_miu-miu_literary-club_video-pills3-26.mp4", "THIS26-014_E_miu-miu_literary-club_titkok-recap.mp4"], ""],
+  ["ITA", "Prada", "Training FW25", "THIS26-013", "2026", ["THIS26-013_A_prada_training-fw25.mp4", "THIS26-013_B_prada_training-fw25.mp4", "THIS26-013_C_prada_training-fw25.mp4", "THIS26-013_D_prada_training-fw25.mp4"], ""],
+  ["ITA", "Prada", "Making of Bonnie", "THIS26-012", "2026", ["THIS26-012_A_prada_making-of-bonnie_man.mp4", "THIS26-012_B_prada_making-of-bonnie_woman.mp4"], ""],
+  ["USA", "Prada", "Prada Mode NYC", "THIS26-011", "2026", ["THIS26-011_A_prada_mode-nyc_namtan.mp4", "THIS26-011_B_prada_mode-nyc_hunter.mp4", "THIS26-011_C_prada_mode-nyc_kentato.mp4", "THIS26-011_D_prada_mode-nyc_lola-corfixen.mp4", "THIS26-011_E_prada_mode-nyc_empty-space.mp4"], ""],
+  ["ITA", "Prada", "Prada Celel Arrival SS27 M", "THIS26-010", "2026", ["THIS26-010_prada_celel-arrival-ss27-m.mp4"], ""],
+  ["ITA", "Prada", "Prada Editorial FW26", "THIS26-009", "2026", ["THIS26-009_A_prada_editorial-fw26.mp4", "THIS26-009_B_prada_editorial-fw26.mp4", "THIS26-009_C_prada_editorial-fw26.mp4", "THIS26-009_D_prada_editorial-fw26.mp4", "THIS26-009_E_prada_editorial-fw26.mp4", "THIS26-009_F_prada_editorial-fw26.mp4", "THIS26-009_G_prada_editorial-fw26.mp4", "THIS26-009_H_prada_editorial-fw26.mp4"], ""],
+  ["ITA", "Prada", "Prada Celeb Arrival FW26 W", "THIS26-008", "2026", ["THIS26-008_prada_celeb-arrival-fw26-w.mp4"], ""],
+  ["USA", "Prada", "Prada Editorial FW26", "THIS26-007", "2026", ["THIS26-007_prada_editorial-fw26.mp4"], ""],
+  ["ITA", "Prada", "Transform Project", "THIS26-006", "2026", ["THIS26-006_prada_transform-project.mp4"], ""],
+  ["ITA", "Miu Miu", "Always On", "THIS26-005", "2026", ["THIS26-005_A_miu-miu_always-on.mp4", "THIS26-005_B_miu-miu_always-on.mp4", "THIS26-005_C_miu-miu_always-on.mp4"], ""],
+  ["ITA", "Prada", "Making of Route", "THIS26-004", "2026", ["THIS26-004_prada_making-of-route.mp4"], ""],
+  ["ITA", "Prada", "Making of Devore", "THIS26-003", "2026", ["THIS26-003_prada_making-of-devore.mp4"], ""],
+  ["ITA", "Prada", "Frames Insight", "THIS26-002", "2026", ["THIS26-002_A_prada_frames-insight_25.mp4", "THIS26-002_B_prada_frames-insight_24.mp4", "THIS26-002_C_prada_frames-insight_26.mp4"], ""],
+  ["ITA", "Prada", "Making of Montecarlo", "THIS26-001", "2026", ["THIS26-001_prada_making-of-montecarlo.mp4"], ""],
+  ["ITA", "Miu Miu", "Literary Club", "THIS25-042", "2025", ["THIS25-042_A_miu-miu_literary-club_titkok-1.mp4", "THIS25-042_B_miu-miu_literary-club_titkok-2.mp4", "THIS25-042_C_miu-miu_literary-club_titkok-3.mp4"], ""],
+  ["LATAM", "Prada", "Re-Nylon Collateral", "THIS25-041", "2025", ["THIS25-041_A_prada_re-nylon-collateral_woman.mp4", "THIS25-041_B_prada_re-nylon-collateral_man.mp4"], ""],
+  ["UAE", "Prada", "Ramadan Campaign 25", "THIS25-040", "2025", ["THIS25-040_A_prada_ramadan-campaign-25.mp4", "THIS25-040_B_prada_ramadan-campaign-25.mp4"], ""],
+  ["ESP", "Prada", "Prada Making Of Gonne SS26", "THIS25-039", "2025", ["THIS25-039_prada_making-of-gonne-ss26.mp4"], ""],
+  ["APAC", "Prada", "Cafe Mi-Shang Ion", "THIS25-038", "2025", ["THIS25-038_A_prada_cafe-mi-shang-ion.mp4", "THIS25-038_B_prada_cafe-mi-shang-ion.mp4", "THIS25-038_C_prada_cafe-mi-shang-ion.mp4", "THIS25-038_D_prada_cafe-mi-shang-ion.mp4", "THIS25-038_E_prada_cafe-mi-shang-ion.mp4"], ""],
+  ["FRA", "Miu Miu", "Miu Miu FW26", "THIS25-037", "2025", ["THIS25-037_A_miu-miu_fw26.mp4", "THIS25-037_B_miu-miu_fw26.mp4", "THIS25-037_C_miu-miu_fw26.mp4", "THIS25-037_D_miu-miu_fw26.mp4", "THIS25-037_E_miu-miu_fw26.mp4", "THIS25-037_F_miu-miu_fw26.mp4", "THIS25-037_G_miu-miu_fw26.mp4", "THIS25-037_H_miu-miu_fw26.mp4", "THIS25-037_I_miu-miu_fw26.mp4"], ""],
+  ["FRA", "Miu Miu", "SS26 Post Show", "THIS25-036", "2025", ["THIS25-036_A_miu-miu_ss26-post-show_joey.mp4", "THIS25-036_B_miu-miu_ss26-post-show_kapoor.mp4", "THIS25-036_C_miu-miu_ss26-post-show_jinmai.mp4", "THIS25-036_D_miu-miu_ss26-post-show_jun.mp4"], ""],
+  ["ITA", "Miu Miu", "Miu Miu FW25", "THIS25-035", "2025", ["THIS25-035_A_miu-miu_fw25.mp4", "THIS25-035_B_miu-miu_fw25.mp4", "THIS25-035_C_miu-miu_fw25.mp4", "THIS25-035_D_miu-miu_fw25.mp4", "THIS25-035_E_miu-miu_fw25.mp4", "THIS25-035_F_miu-miu_fw25.mp4", "THIS25-035_G_miu-miu_fw25.mp4", "THIS25-035_H_miu-miu_fw25.mp4", "THIS25-035_I_miu-miu_fw25.mp4"], ""],
+  ["FRA", "Miu Miu", "FW25 Post Show", "THIS25-034", "2025", ["THIS25-034_A_miu-miu_fw25-post-show_sidney.mp4", "THIS25-034_B_miu-miu_fw25-post-show_wongyoung.mp4", "THIS25-034_C_miu-miu_fw25-post-show_lexie.mp4", "THIS25-034_D_miu-miu_fw25-post-show_wang.mp4"], ""],
+  ["ITA", "Miu Miu", "Miu Miu SS25", "THIS25-033", "2025", ["THIS25-033_A_miu-miu_ss25.mp4", "THIS25-033_B_miu-miu_ss25.mp4", "THIS25-033_C_miu-miu_ss25.mp4", "THIS25-033_D_miu-miu_ss25.mp4"], ""],
+  ["ITA", "Prada", "Capri Activation", "THIS25-032", "2025", ["THIS25-032_A_prada_capri-activation.mp4", "THIS25-032_B_prada_capri-activation.mp4"], ""],
+  ["ITA", "Linea Rossa", "Eyewear Tondi", "THIS25-031", "2025", ["THIS25-031_A_linea-rossa_eyewear-tondi.mp4", "THIS25-031_B_linea-rossa_eyewear-tondi.mp4", "THIS25-031_C_linea-rossa_eyewear-tondi.mp4"], ""],
+  ["ITA", "Prada", "GRWM Somi", "THIS25-030", "2025", ["THIS25-030_prada_grwm-somi.mp4"], ""],
+  ["ITA", "Prada", "GRWM Damson", "THIS25-029", "2025", ["THIS25-029_prada_grwm-damson.mp4"], ""],
+  ["ITA", "Prada", "GRWM Sadie Sink", "THIS25-028", "2025", ["THIS25-028_prada_grwm-sadie-sink.mp4"], ""],
+  ["ITA", "Prada", "Factory Visit SS26", "THIS25-027", "2025", ["THIS25-027_prada_factory-visit-ss26.mp4"], ""],
+  ["GBR", "Church's", "Holiday 25", "THIS25-026", "2025", ["THIS25-026_church-s_holiday-25.mp4"], ""],
+  ["ITA", "Prada", "Teaser SS26", "THIS25-025", "2025", ["THIS25-025_prada_teaser-ss26.mp4"], ""],
+  ["ITA", "Prada", "Textile's Archive", "THIS25-024", "2025", ["THIS25-024_prada_textile-s-archive.mp4"], ""],
+  ["APAC", "Miu Miu", "Isetan", "THIS25-023", "2025", ["THIS25-023_miu-miu_isetan.mp4"], ""],
   ["ITA", "Miu Miu", "Isetan Atheneum", "THIS25-022", "2025", ["THIS25-022_miu-miu_isetan-atheneum.mp4"], ""],
-  ["USA", "Prada", "Collateral Jewels", "THIS25-021", "2025", ["THIS25-021_prada_collateral-jewels.mp4"], ""],
-  ["ITA", "Car Shoe", "Summer", "THIS25-020", "2025", ["THIS25-020_car-shoe_summer.mp4"], ""],
+  ["USA", "Prada", "Collateral Jewels", "THIS25-021", "2025", ["THIS25-021_A_prada_collateral-jewels.mp4", "THIS25-021_B_prada_collateral-jewels.mp4", "THIS25-021_C_prada_collateral-jewels.mp4", "THIS25-021_D_prada_collateral-jewels.mp4", "THIS25-021_E_prada_collateral-jewels.mp4", "THIS25-021_F_prada_collateral-jewels.mp4", "THIS25-021_G_prada_collateral-jewels.mp4", "THIS25-021_H_prada_collateral-jewels.mp4", "THIS25-021_I_prada_collateral-jewels.mp4"], ""],
+  ["ITA", "Car Shoe", "Summer", "THIS25-020", "2025", ["THIS25-020_A_car-shoe_summer.mp4", "THIS25-020_B_car-shoe_summer.mp4", "THIS25-020_C_car-shoe_summer.mp4", "THIS25-020_D_car-shoe_summer.mp4"], ""],
   ["ITA", "Prada", "GRWM Win Metawin", "THIS25-019", "2025", ["THIS25-019_prada_grwm-win-metawin.mp4"], ""],
   ["ESP", "Prada", "Savoir Faire Dada", "THIS25-018", "2025", ["THIS25-018_prada_savoir-faire-dada.mp4"], ""],
   ["ITA", "Prada", "Making of Dada", "THIS25-017", "2025", ["THIS25-017_prada_making-of-dada.mp4"], ""],
   ["APAC", "Miu Miu", "Puyi Eyewear", "THIS25-016", "2025", ["THIS25-016_miu-miu_puyi-eyewear.mp4"], ""],
-  ["GBR", "Church's", "FW25 Collateral", "THIS25-015", "2025", ["THIS25-015_church-s_fw25-collateral.mp4"], ""],
+  ["GBR", "Church's", "FW25 Collateral", "THIS25-015", "2025", ["THIS25-015_A_church-s_fw25-collateral.mp4", "THIS25-015_B_church-s_fw25-collateral.mp4", "THIS25-015_C_church-s_fw25-collateral.mp4", "THIS25-015_D_church-s_fw25-collateral.mp4"], ""],
   ["ITA", "Prada", "Making of Shetland", "THIS25-014", "2025", ["THIS25-014_prada_making-of-shetland.mp4"], ""],
-  ["USA", "Miu Miu", "Met Gala", "THIS25-013", "2025", ["THIS25-013_miu-miu_met-gala.mp4"], ""],
+  ["USA", "Miu Miu", "Met Gala", "THIS25-013", "2025", ["THIS25-013_A_miu-miu_met-gala.mp4", "THIS25-013_B_miu-miu_met-gala.mp4", "THIS25-013_C_miu-miu_met-gala.mp4"], ""],
   ["ITA", "Prada", "Making of Galleria", "THIS25-012", "2025", ["THIS25-012_prada_making-of-galleria.mp4"], ""],
   ["ITA", "Prada", "Making of Vitello", "THIS25-011", "2025", ["THIS25-011_prada_making-of-vitello.mp4"], ""],
-  ["GBR", "Church's", "SS25 Collateral", "THIS25-010", "2025", ["THIS25-010_church-s_ss25-collateral.mp4"], ""],
-  ["APAC", "Prada", "Making Of Prada Cafe", "THIS25-009", "2025", ["THIS25-009_prada_making-of-prada-cafe.mp4"], ""],
-  ["ITA", "Miu Miu", "FW25 Show", "THIS25-008", "2025", ["THIS25-008_miu-miu_fw25-show.mp4"], ""],
+  ["GBR", "Church's", "SS25 Collateral", "THIS25-010", "2025", ["THIS25-010_A_church-s_ss25-collateral.mp4", "THIS25-010_B_church-s_ss25-collateral.mp4", "THIS25-010_C_church-s_ss25-collateral.mp4"], ""],
+  ["GBR", "Church's", "Holiday24 Collateral", "THIS25-009", "2025", ["THIS25-009_A_church-s_holiday24-collateral.mp4", "THIS25-009_B_church-s_holiday24-collateral.mp4", "THIS25-009_C_church-s_holiday24-collateral.mp4", "THIS25-009_D_church-s_holiday24-collateral.mp4"], ""],
+  ["APAC", "Prada", "Making Of Prada Cafe", "THIS25-008", "2025", ["THIS25-008_A_prada_making-of-prada-cafe.mp4", "THIS25-008_B_prada_making-of-prada-cafe.mp4", "THIS25-008_C_prada_making-of-prada-cafe.mp4", "THIS25-008_D_prada_making-of-prada-cafe.mp4"], ""],
   ["ITA", "Prada", "Frames", "THIS25-007", "2025", ["THIS25-007_A_prada_frames.mp4", "THIS25-007_B_prada_frames.mp4", "THIS25-007_C_prada_frames.mp4"], "THIS25-007.html"],
   ["FRA", "Miu Miu", "FW25 TikTok Teaser", "THIS25-006", "2025", ["THIS25-006_miu-miu_fw25-tiktok-teaser.mp4"], ""],
   ["ITA", "Prada", "GRWM Benedetta Porcaroli", "THIS25-005", "2025", ["THIS25-005_prada_grwm-benedetta-porcaroli.mp4"], ""],
@@ -195,15 +215,26 @@ const data = [
   ["APAC", "Miu Miu", "Lucky Day", "THIS25-003", "2025", ["THIS25-003_miu-miu_lucky-day.mp4"], ""],
   ["ITA", "Marchesi", "St. Valentine", "THIS25-002", "2025", ["THIS25-002_A_marchesi_st-valentine_elena.mp4", "THIS25-002_B_marchesi_st-valentine_eustachio.mp4", "THIS25-002_C_marchesi_st-valentine_george.mp4", "THIS25-002_D_marchesi_st-valentine_daisy.mp4"], ""],
   ["ITA", "Prada", "GRWM Damson Idris", "THIS25-001", "2025", ["THIS25-001_prada_grwm-damson-idris.mp4"], ""],
-  ["GBR", "Church's", "SS24 Off Town", "THIS24-010", "2024", ["THIS24-010_A_church-s_ss24-off-town.mp4", "THIS24-010_B_church-s_ss24-off-town.mp4", "THIS24-010_C_church-s_ss24-off-town.mp4", "THIS24-010_D_church-s_ss24-off-town.mp4"], ""],
-  ["ITA", "Linea Rossa", "Eyewear", "THIS24-009", "2024", ["THIS24-009_A_linea-rossa_eyewear-tondi.mp4", "THIS24-009_B_linea-rossa_eyewear-quadrati.mp4", "THIS24-009_C_linea-rossa_eyewear-mascherina.mp4"], ""],
-  ["ITA", "Prada", "GRWM Sana Minatozaki", "THIS24-008", "2024", ["THIS24-008_prada_grwm-sana-minatozaki.mp4"], ""],
-  ["ITA", "Miu Miu", "Personalization", "THIS24-007", "2024", ["THIS24-007_miu-miu_personalization.mp4"], ""],
-  ["FRA", "Miu Miu", "Gymnasium", "THIS24-006", "2024", ["THIS24-006_miu-miu_gymnasium.mp4"], ""],
-  ["UAE", "Prada", "Ramadan 24", "THIS24-005", "2024", ["THIS24-005_prada_ramadan-24.mp4"], ""],
-  ["USA", "Prada", "Holiday Youtube Content", "THIS24-004", "2024", ["THIS24-004_A_prada_holiday-youtube-content.mp4", "THIS24-004_B_prada_holiday-youtube-content.mp4", "THIS24-004_C_prada_holiday-youtube-content.mp4", "THIS24-004_D_prada_holiday-youtube-content.mp4"], ""],
-  ["ITA", "Marchesi", "Easter Campaign", "THIS24-003", "2024", ["THIS24-003_marchesi_easter-campaign.mp4"], ""],
-  ["ITA", "Marchesi", "Holiday Campaign", "THIS24-002", "2024", ["THIS24-002_A_marchesi_holiday-campaign.mp4", "THIS24-002_B_marchesi_holiday-campaign.mp4", "THIS24-002_C_marchesi_holiday-campaign.mp4"], ""],
+  ["ITA", "Prada", "Making of Fringes", "THIS24-021", "2024", ["THIS24-021_prada_making-of-fringes.mp4"], ""],
+  ["ITA", "Prada", "Made in FW", "THIS24-020", "2024", ["THIS24-020_prada_made-in-fw.mp4"], ""],
+  ["ITA", "Miu Miu", "Miu Miu SS26", "THIS24-019", "2024", ["THIS24-019_miu-miu_ss26.mp4"], ""],
+  ["ITA", "Miu Miu", "Miu Miu SS25", "THIS24-018", "2024", ["THIS24-018_miu-miu_ss25.mp4"], ""],
+  ["FRA", "Miu Miu", "Miu Miu Teaser FW24", "THIS24-017", "2024", ["THIS24-017_miu-miu_teaser-fw24.mp4"], ""],
+  ["FRA", "Miu Miu", "Miu Miu Teaser FW25", "THIS24-016", "2024", ["THIS24-016_miu-miu_teaser-fw25.mp4"], ""],
+  ["ITA", "Prada", "Making of Buckle", "THIS24-015", "2024", ["THIS24-015_prada_making-of-buckle.mp4"], ""],
+  ["ITA", "Prada", "Making of Bows", "THIS24-014", "2024", ["THIS24-014_prada_making-of-bows.mp4"], ""],
+  ["ITA", "Prada", "Making of Mirrors", "THIS24-013", "2024", ["THIS24-013_prada_making-of-mirrors.mp4"], ""],
+  ["ITA", "Prada", "Making of Arquè", "THIS24-012", "2024", ["THIS24-012_prada_making-of-arque.mp4"], ""],
+  ["ITA", "Prada", "Making of Galleria Fiori", "THIS24-011", "2024", ["THIS24-011_prada_making-of-galleria-fiori.mp4"], ""],
+  ["APAC", "Miu Miu", "Reverie Eyewear", "THIS24-010", "2024", ["THIS24-010_miu-miu_reverie-eyewear.mp4"], ""],
+  ["GBR", "Church's", "SS24 Off Town", "THIS24-009", "2024", ["THIS24-009_A_church-s_ss24-off-town.mp4", "THIS24-009_B_church-s_ss24-off-town.mp4", "THIS24-009_C_church-s_ss24-off-town.mp4", "THIS24-009_D_church-s_ss24-off-town.mp4"], ""],
+  ["ITA", "Linea Rossa", "Linea Rossa Eyewear", "THIS24-008", "2024", ["THIS24-008_A_linea-rossa_eyewear_tondi.mp4", "THIS24-008_B_linea-rossa_eyewear_quadrati.mp4", "THIS24-008_C_linea-rossa_eyewear_mascherina.mp4"], ""],
+  ["ITA", "Prada", "GRWM Sana Minatozaki", "THIS24-007", "2024", ["THIS24-007_prada_grwm-sana-minatozaki.mp4"], ""],
+  ["ITA", "Miu Miu", "Personalization", "THIS24-006", "2024", ["THIS24-006_miu-miu_personalization.mp4"], ""],
+  ["FRA", "Miu Miu", "Gymnasium", "THIS24-005", "2024", ["THIS24-005_miu-miu_gymnasium.mp4"], ""],
+  ["UAE", "Prada", "Ramadan 24", "THIS24-004", "2024", ["THIS24-004_prada_ramadan-24.mp4"], ""],
+  ["USA", "Prada", "Holiday Youtube Content", "THIS24-003", "2024", ["THIS24-003_A_prada_holiday-youtube-content.mp4", "THIS24-003_B_prada_holiday-youtube-content.mp4", "THIS24-003_C_prada_holiday-youtube-content.mp4", "THIS24-003_D_prada_holiday-youtube-content.mp4"], ""],
+  ["ITA", "Marchesi", "Holiday Campaign", "THIS24-002", "2024", ["THIS24-002_A_marchesi_holiday-campaign.mp4", "THIS24-002_B_marchesi_holiday-campaign.mp4", "THIS24-002_C_marchesi_holiday-campaign.mp4", "THIS24-002_D_marchesi_holiday-campaign.mp4"], ""],
   ["ITA", "Car Shoe", "Making Of Car Shoe", "THIS24-001", "2024", ["THIS24-001_car-shoe_making-of-car-shoe.mp4"], ""]
 ];
 
@@ -220,12 +251,6 @@ let shot = 0;
 
 pv.addEventListener("error", () => thumb.classList.remove("playing"));
 
-pv.addEventListener("loadedmetadata", () => {
-  if (!pv.videoWidth || !pv.videoHeight) return;
-  const r = pv.videoWidth / pv.videoHeight;
-  thumb.style.aspectRatio = pv.videoWidth + " / " + pv.videoHeight;
-  thumb.style.width = r > 1.2 ? "340px" : (r > 0.85 ? "280px" : "220px");
-});
 
 function showShot(){
   const files = current < 0 ? [] : data[current][5];
@@ -234,8 +259,6 @@ function showShot(){
   if (files.length > 1) {
     rcount.textContent = String(shot + 1).padStart(2, "0") + " / " + String(files.length).padStart(2, "0");
   }
-  thumb.style.aspectRatio = "";
-  thumb.style.width = "";
   if (!files.length) { pv.removeAttribute("src"); return; }
   pv.src = "video/" + files[shot];
   pv.play().then(() => thumb.classList.add("playing")).catch(() => {});

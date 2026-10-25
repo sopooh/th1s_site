@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0A;
+  --ink:#EDEDE8;
+  --muted:#77766F;
+  --line:#242320;--thumb:#1A1917;
+  --sans:'Archivo',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;padding:24px 32px 32px;min-height:100vh;
+  display:flex;flex-direction:column;
+}
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+nav{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:16px}
+.wordmark{font-size:15px;letter-spacing:-.02em;font-weight:700;color:var(--ink);text-decoration:none}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a:focus-visible,.nav-links a[aria-current]{color:var(--ink)}
+
+.rule{border-top:1px solid var(--line)}
+.labels{display:grid;grid-template-columns:1fr 1fr;padding:12px 0 48px}
+.labels .right{display:grid;grid-template-columns:56px 110px 1fr 64px;gap:12px}
+
+.body-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;flex:1}
+
+.stage{position:relative;position:sticky;top:24px;min-height:520px;align-self:start}
+.statement{
+  font-size:44px;line-height:1.15;letter-spacing:-.01em;font-weight:400;
+  transition:opacity .3s;
+}
+.statement .dim{color:var(--muted)}
+.stage.active .statement{opacity:0}
+
+.now{position:absolute;top:0;left:0;opacity:0;visibility:hidden;transition:opacity .3s}
+.stage.active .now{opacity:1;visibility:visible}
+.now .thumb{position:relative;width:300px;aspect-ratio:4/5;background:var(--thumb);display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden}
+.now .thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
+.now .thumb.playing video{opacity:1}
+.now .thumb span{font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--muted)}
+.reel{width:300px;display:flex;align-items:center;gap:12px;margin-bottom:20px;opacity:0;transition:opacity .2s;pointer-events:none}
+.reel.on{opacity:1;pointer-events:auto}
+.reel .count{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.reel button{border:0;background:none;padding:0;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;font-family:var(--sans);transition:color .2s}
+.reel button:hover{color:var(--ink)}
+.now .pid{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.now .pbrand{font-size:15px;letter-spacing:.02em;color:var(--muted);margin-top:8px}
+.now .ptitle{font-size:40px;line-height:1.1;letter-spacing:-.01em;margin-top:4px}
+
+.list{display:flex;flex-direction:column}
+.row{
+  display:grid;grid-template-columns:56px 110px 1fr 64px;align-items:baseline;gap:12px;
+  padding:7px 0;background:none;border:0;width:100%;text-align:left;font:inherit;
+  color:var(--muted);cursor:pointer;transition:color .2s;
+}
+.row .code{font-family:var(--mono);font-size:12px}
+.row .bname{font-size:16px;letter-spacing:.01em;color:var(--ink);opacity:.55;transition:opacity .2s}
+.row .name{font-size:16px;letter-spacing:.01em}
+
+.row .yr{font-family:var(--mono);font-size:12px;text-align:right}
+.row:hover,.row:focus-visible{color:var(--ink);outline:none}
+.row:hover .bname,.row:focus-visible .bname{opacity:1}
+.row.is-active{color:var(--ink)}
+.row.is-active .bname{opacity:1}
+.row:focus-visible .code{text-decoration:underline}
+a.row{text-decoration:none}
+a.row:hover .name,a.row:focus-visible .name{text-decoration:underline;text-underline-offset:3px}
+
+.bio{max-width:420px;margin-top:48px}
+.bio p{font-size:12px;line-height:1.5;color:var(--muted);margin-top:12px}
+footer{display:flex;justify-content:space-between;padding-top:12px;margin-top:48px}
+
+@media (max-width:820px){
+  body{padding:20px}
+  .body-grid{grid-template-columns:1fr;gap:32px}
+  .labels{grid-template-columns:1fr;padding-bottom:24px}
+  .labels .left{display:none}
+  .stage{display:none}
+  .now .ptitle{font-size:26px}
+  .statement{font-size:30px}
+  .row .name,.row .bname{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="wordmark">th1s.prd</span>
+  <div class="nav-links">
+    <a href="#" aria-current="page">Work</a>
+    <a href="#">Studio</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+
+<div class="rule"></div>
+<div class="labels">
+  <span class="eyebrow left">Archive 2026 / 2024</span>
+  <span class="right">
+    <span class="eyebrow">Market</span>
+    <span class="eyebrow">Brand</span>
+    <span class="eyebrow">Project</span>
+    <span class="eyebrow" style="text-align:right">Year</span>
+  </span>
+</div>
+
+<div class="body-grid">
+  <div class="stage" id="stage">
+    <div class="statement">Selected work</div>
+    <div class="now">
+      <div class="thumb" id="thumb"><video id="pv" muted loop playsinline preload="none"></video><span>th1s.prd</span></div>
+      <div class="reel" id="reel">
+        <button id="rprev" aria-label="Video precedente">&lsaquo;</button>
+        <span class="count" id="rcount"></span>
+        <button id="rnext" aria-label="Video successivo">&rsaquo;</button>
+      </div>
+      <div class="pid" id="p-id"></div>
+      <div class="pbrand" id="p-brand"></div>
+      <div class="ptitle" id="p-title"></div>
+    </div>
+  </div>
+
+  <div class="list" id="list"></div>
+</div>
+
+<div class="bio">
+  <div class="rule"></div>
+  <span class="eyebrow" style="display:block;padding-top:12px">Biography</span>
+  <p>Direction, editing and social content for fashion and luxury. Based in Milan, working across Europe, the United States and Asia.</p>
+</div>
+
+<div class="rule" style="margin-top:24px"></div>
+<footer>
+  <span class="eyebrow">th1s.prd (24/26)</span>
+  <span class="eyebrow" style="text-align:right">All rights reserved<br>[01]</span>
+</footer>
+
+<script>
+const data = [
+  ["ITA", "Prada", "SS27 Show Woman", "THIS26-024", "2026", ["THIS26-024_A_prada_ss27-show-woman_benedetta-porcaroli.mp4", "THIS26-024_B_prada_ss27-show-woman_bo-bragason.mp4", "THIS26-024_C_prada_ss27-show-woman_charlie-damelio.mp4", "THIS26-024_D_prada_ss27-show-woman_chisa.mp4", "THIS26-024_E_prada_ss27-show-woman_chung.mp4", "THIS26-024_F_prada_ss27-show-woman_emilia-clarke.mp4", "THIS26-024_G_prada_ss27-show-woman_gabrielle-union-dwyane-wade.mp4", "THIS26-024_H_prada_ss27-show-woman_maya-hawke.mp4", "THIS26-024_I_prada_ss27-show-woman_naomi-ackie.mp4", "THIS26-024_J_prada_ss27-show-woman_naomi-watts.mp4", "THIS26-024_K_prada_ss27-show-woman_win-metawin.mp4", "THIS26-024_L_prada_ss27-show-woman_yang-mi.mp4"], ""],
+  ["ITA", "Prada", "SS27 Post Show", "THIS26-023", "2026", ["THIS26-023_prada_ss27-post-show.mp4"], ""],
+  ["FRA", "Miu Miu", "SS27 Tiktok Show", "THIS26-022", "2026", ["THIS26-022_A_miu-miu_ss27-tiktok-show_miumiu-1.mp4", "THIS26-022_B_miu-miu_ss27-tiktok-show_miumiu-2.mp4", "THIS26-022_C_miu-miu_ss27-tiktok-show_miumiu-3.mp4", "THIS26-022_D_miu-miu_ss27-tiktok-show_miumiu-4.mp4", "THIS26-022_E_miu-miu_ss27-tiktok-show_miumiu-5.mp4", "THIS26-022_F_miu-miu_ss27-tiktok-show_miumiu-6.mp4"], ""],
+  ["GBR", "Church's", "Church's Club", "THIS26-021", "2026", ["THIS26-021_church-s_club.mp4"], ""],
+  ["FRA", "Miu Miu", "Literary Club", "THIS26-020", "2026", ["THIS26-020_miu-miu_literary-club.mp4"], ""],
+  ["ITA", "Prada", "Sea Beyond", "THIS26-019", "2026", ["THIS26-019_prada_sea-beyond.mp4"], ""],
+  ["FRA", "Prada", "Pradasphere Galleria", "THIS26-018", "2026", ["THIS26-018_A_prada_pradasphere-galleria_sana.mp4", "THIS26-018_B_prada_pradasphere-galleria_jaehyun.mp4", "THIS26-018_C_prada_pradasphere-galleria_leedohyun.mp4", "THIS26-018_D_prada_pradasphere-galleria_benedetta.mp4"], ""],
+  ["GBR", "Church's", "SS26 Collateral", "THIS26-017", "2026", ["THIS26-017_A_church-s_ss26-collateral_new-formal-1.mp4", "THIS26-017_B_church-s_ss26-collateral_new-formal-2.mp4", "THIS26-017_C_church-s_ss26-collateral_new-formal-3.mp4", "THIS26-017_D_church-s_ss26-collateral_new-formal-4.mp4"], ""],
+  ["GBR", "Church's", "Sunday Morning", "THIS26-016", "2026", ["THIS26-016_A_church-s_sunday-morning.mp4", "THIS26-016_B_church-s_sunday-morning.mp4"], ""],
+  ["ITA", "Miu Miu", "Miu Miu Tales 2026", "THIS26-015", "2026", ["THIS26-015_A_miu-miu_tales-2026_venezia-26-youtube.mp4", "THIS26-015_B_miu-miu_tales-2026_venezia-26-tiktok-1.mp4", "THIS26-015_C_miu-miu_tales-2026_venezia-26-tiktok-2.mp4", "THIS26-015_D_miu-miu_tales-2026_venezia-26-tiktok-3.mp4", "THIS26-015_E_miu-miu_tales-2026_icons-ecom-1.mp4", "THIS26-015_F_miu-miu_tales-2026_icons-ecom-2.mp4", "THIS26-015_G_miu-miu_tales-2026_icons-ecom-3.mp4"], ""],
+  ["ITA", "Miu Miu", "Literary Club", "THIS26-014", "2026", ["THIS26-014_A_miu-miu_literary-club_teaser-26.mp4", "THIS26-014_B_miu-miu_literary-club_video-pills1-26.mp4", "THIS26-014_C_miu-miu_literary-club_video-pills2-26.mp4", "THIS26-014_D_miu-miu_literary-club_video-pills3-26.mp4", "THIS26-014_E_miu-miu_literary-club_titkok-recap.mp4"], ""],
+  ["ITA", "Prada", "Training FW25", "THIS26-013", "2026", ["THIS26-013_A_prada_training-fw25.mp4", "THIS26-013_B_prada_training-fw25.mp4", "THIS26-013_C_prada_training-fw25.mp4", "THIS26-013_D_prada_training-fw25.mp4"], ""],
+  ["ITA", "Prada", "Making of Bonnie", "THIS26-012", "2026", ["THIS26-012_A_prada_making-of-bonnie_man.mp4", "THIS26-012_B_prada_making-of-bonnie_woman.mp4"], ""],
+  ["USA", "Prada", "Prada Mode NYC", "THIS26-011", "2026", ["THIS26-011_A_prada_mode-nyc_namtan.mp4", "THIS26-011_B_prada_mode-nyc_hunter.mp4", "THIS26-011_C_prada_mode-nyc_kentato.mp4", "THIS26-011_D_prada_mode-nyc_lola-corfixen.mp4", "THIS26-011_E_prada_mode-nyc_empty-space.mp4"], ""],
+  ["ITA", "Prada", "Prada Celel Arrival SS27 M", "THIS26-010", "2026", ["THIS26-010_prada_celel-arrival-ss27-m.mp4"], ""],
+  ["ITA", "Prada", "Prada Editorial FW26", "THIS26-009", "2026", ["THIS26-009_A_prada_editorial-fw26.mp4", "THIS26-009_B_prada_editorial-fw26.mp4", "THIS26-009_C_prada_editorial-fw26.mp4", "THIS26-009_D_prada_editorial-fw26.mp4", "THIS26-009_E_prada_editorial-fw26.mp4", "THIS26-009_F_prada_editorial-fw26.mp4", "THIS26-009_G_prada_editorial-fw26.mp4", "THIS26-009_H_prada_editorial-fw26.mp4"], ""],
+  ["ITA", "Prada", "Prada Celeb Arrival FW26 W", "THIS26-008", "2026", ["THIS26-008_prada_celeb-arrival-fw26-w.mp4"], ""],
+  ["USA", "Prada", "Prada Editorial FW26", "THIS26-007", "2026", ["THIS26-007_prada_editorial-fw26.mp4"], ""],
+  ["ITA", "Prada", "Transform Project", "THIS26-006", "2026", ["THIS26-006_prada_transform-project.mp4"], ""],
+  ["ITA", "Miu Miu", "Always On", "THIS26-005", "2026", ["THIS26-005_A_miu-miu_always-on.mp4", "THIS26-005_B_miu-miu_always-on.mp4", "THIS26-005_C_miu-miu_always-on.mp4"], ""],
+  ["ITA", "Prada", "Making of Route", "THIS26-004", "2026", ["THIS26-004_prada_making-of-route.mp4"], ""],
+  ["ITA", "Prada", "Making of Devore", "THIS26-003", "2026", ["THIS26-003_prada_making-of-devore.mp4"], ""],
+  ["ITA", "Prada", "Frames Insight", "THIS26-002", "2026", ["THIS26-002_A_prada_frames-insight_25.mp4", "THIS26-002_B_prada_frames-insight_24.mp4", "THIS26-002_C_prada_frames-insight_26.mp4"], ""],
+  ["ITA", "Prada", "Making of Montecarlo", "THIS26-001", "2026", ["THIS26-001_prada_making-of-montecarlo.mp4"], ""],
+  ["ITA", "Miu Miu", "Literary Club", "THIS25-042", "2025", ["THIS25-042_A_miu-miu_literary-club_titkok-1.mp4", "THIS25-042_B_miu-miu_literary-club_titkok-2.mp4", "THIS25-042_C_miu-miu_literary-club_titkok-3.mp4"], ""],
+  ["LATAM", "Prada", "Re-Nylon Collateral", "THIS25-041", "2025", ["THIS25-041_A_prada_re-nylon-collateral_woman.mp4", "THIS25-041_B_prada_re-nylon-collateral_man.mp4"], ""],
+  ["UAE", "Prada", "Ramadan Campaign 25", "THIS25-040", "2025", ["THIS25-040_A_prada_ramadan-campaign-25.mp4", "THIS25-040_B_prada_ramadan-campaign-25.mp4"], ""],
+  ["ESP", "Prada", "Prada Making Of Gonne SS26", "THIS25-039", "2025", ["THIS25-039_prada_making-of-gonne-ss26.mp4"], ""],
+  ["APAC", "Prada", "Cafe Mi-Shang Ion", "THIS25-038", "2025", ["THIS25-038_A_prada_cafe-mi-shang-ion.mp4", "THIS25-038_B_prada_cafe-mi-shang-ion.mp4", "THIS25-038_C_prada_cafe-mi-shang-ion.mp4", "THIS25-038_D_prada_cafe-mi-shang-ion.mp4", "THIS25-038_E_prada_cafe-mi-shang-ion.mp4"], ""],
+  ["FRA", "Miu Miu", "Miu Miu FW26", "THIS25-037", "2025", ["THIS25-037_A_miu-miu_fw26.mp4", "THIS25-037_B_miu-miu_fw26.mp4", "THIS25-037_C_miu-miu_fw26.mp4", "THIS25-037_D_miu-miu_fw26.mp4", "THIS25-037_E_miu-miu_fw26.mp4", "THIS25-037_F_miu-miu_fw26.mp4", "THIS25-037_G_miu-miu_fw26.mp4", "THIS25-037_H_miu-miu_fw26.mp4", "THIS25-037_I_miu-miu_fw26.mp4"], ""],
+  ["FRA", "Miu Miu", "SS26 Post Show", "THIS25-036", "2025", ["THIS25-036_A_miu-miu_ss26-post-show_joey.mp4", "THIS25-036_B_miu-miu_ss26-post-show_kapoor.mp4", "THIS25-036_C_miu-miu_ss26-post-show_jinmai.mp4", "THIS25-036_D_miu-miu_ss26-post-show_jun.mp4"], ""],
+  ["ITA", "Miu Miu", "Miu Miu FW25", "THIS25-035", "2025", ["THIS25-035_A_miu-miu_fw25.mp4", "THIS25-035_B_miu-miu_fw25.mp4", "THIS25-035_C_miu-miu_fw25.mp4", "THIS25-035_D_miu-miu_fw25.mp4", "THIS25-035_E_miu-miu_fw25.mp4", "THIS25-035_F_miu-miu_fw25.mp4", "THIS25-035_G_miu-miu_fw25.mp4", "THIS25-035_H_miu-miu_fw25.mp4", "THIS25-035_I_miu-miu_fw25.mp4"], ""],
+  ["FRA", "Miu Miu", "FW25 Post Show", "THIS25-034", "2025", ["THIS25-034_A_miu-miu_fw25-post-show_sidney.mp4", "THIS25-034_B_miu-miu_fw25-post-show_wongyoung.mp4", "THIS25-034_C_miu-miu_fw25-post-show_lexie.mp4", "THIS25-034_D_miu-miu_fw25-post-show_wang.mp4"], ""],
+  ["ITA", "Miu Miu", "Miu Miu SS25", "THIS25-033", "2025", ["THIS25-033_A_miu-miu_ss25.mp4", "THIS25-033_B_miu-miu_ss25.mp4", "THIS25-033_C_miu-miu_ss25.mp4", "THIS25-033_D_miu-miu_ss25.mp4"], ""],
+  ["ITA", "Prada", "Capri Activation", "THIS25-032", "2025", ["THIS25-032_A_prada_capri-activation.mp4", "THIS25-032_B_prada_capri-activation.mp4"], ""],
+  ["ITA", "Linea Rossa", "Eyewear Tondi", "THIS25-031", "2025", ["THIS25-031_A_linea-rossa_eyewear-tondi.mp4", "THIS25-031_B_linea-rossa_eyewear-tondi.mp4", "THIS25-031_C_linea-rossa_eyewear-tondi.mp4"], ""],
+  ["ITA", "Prada", "GRWM Somi", "THIS25-030", "2025", ["THIS25-030_prada_grwm-somi.mp4"], ""],
+  ["ITA", "Prada", "GRWM Damson", "THIS25-029", "2025", ["THIS25-029_prada_grwm-damson.mp4"], ""],
+  ["ITA", "Prada", "GRWM Sadie Sink", "THIS25-028", "2025", ["THIS25-028_prada_grwm-sadie-sink.mp4"], ""],
+  ["ITA", "Prada", "Factory Visit SS26", "THIS25-027", "2025", ["THIS25-027_prada_factory-visit-ss26.mp4"], ""],
+  ["GBR", "Church's", "Holiday 25", "THIS25-026", "2025", ["THIS25-026_church-s_holiday-25.mp4"], ""],
+  ["ITA", "Prada", "Teaser SS26", "THIS25-025", "2025", ["THIS25-025_prada_teaser-ss26.mp4"], ""],
+  ["ITA", "Prada", "Textile's Archive", "THIS25-024", "2025", ["THIS25-024_prada_textile-s-archive.mp4"], ""],
+  ["APAC", "Miu Miu", "Isetan", "THIS25-023", "2025", ["THIS25-023_miu-miu_isetan.mp4"], ""],
+  ["ITA", "Miu Miu", "Isetan Atheneum", "THIS25-022", "2025", ["THIS25-022_miu-miu_isetan-atheneum.mp4"], ""],
+  ["USA", "Prada", "Collateral Jewels", "THIS25-021", "2025", ["THIS25-021_A_prada_collateral-jewels.mp4", "THIS25-021_B_prada_collateral-jewels.mp4", "THIS25-021_C_prada_collateral-jewels.mp4", "THIS25-021_D_prada_collateral-jewels.mp4", "THIS25-021_E_prada_collateral-jewels.mp4", "THIS25-021_F_prada_collateral-jewels.mp4", "THIS25-021_G_prada_collateral-jewels.mp4", "THIS25-021_H_prada_collateral-jewels.mp4", "THIS25-021_I_prada_collateral-jewels.mp4"], ""],
+  ["ITA", "Car Shoe", "Summer", "THIS25-020", "2025", ["THIS25-020_A_car-shoe_summer.mp4", "THIS25-020_B_car-shoe_summer.mp4", "THIS25-020_C_car-shoe_summer.mp4", "THIS25-020_D_car-shoe_summer.mp4"], ""],
+  ["ITA", "Prada", "GRWM Win Metawin", "THIS25-019", "2025", ["THIS25-019_prada_grwm-win-metawin.mp4"], ""],
+  ["ESP", "Prada", "Savoir Faire Dada", "THIS25-018", "2025", ["THIS25-018_prada_savoir-faire-dada.mp4"], ""],
+  ["ITA", "Prada", "Making of Dada", "THIS25-017", "2025", ["THIS25-017_prada_making-of-dada.mp4"], ""],
+  ["APAC", "Miu Miu", "Puyi Eyewear", "THIS25-016", "2025", ["THIS25-016_miu-miu_puyi-eyewear.mp4"], ""],
+  ["GBR", "Church's", "FW25 Collateral", "THIS25-015", "2025", ["THIS25-015_A_church-s_fw25-collateral.mp4", "THIS25-015_B_church-s_fw25-collateral.mp4", "THIS25-015_C_church-s_fw25-collateral.mp4", "THIS25-015_D_church-s_fw25-collateral.mp4"], ""],
+  ["ITA", "Prada", "Making of Shetland", "THIS25-014", "2025", ["THIS25-014_prada_making-of-shetland.mp4"], ""],
+  ["USA", "Miu Miu", "Met Gala", "THIS25-013", "2025", ["THIS25-013_A_miu-miu_met-gala.mp4", "THIS25-013_B_miu-miu_met-gala.mp4", "THIS25-013_C_miu-miu_met-gala.mp4"], ""],
+  ["ITA", "Prada", "Making of Galleria", "THIS25-012", "2025", ["THIS25-012_prada_making-of-galleria.mp4"], ""],
+  ["ITA", "Prada", "Making of Vitello", "THIS25-011", "2025", ["THIS25-011_prada_making-of-vitello.mp4"], ""],
+  ["GBR", "Church's", "SS25 Collateral", "THIS25-010", "2025", ["THIS25-010_A_church-s_ss25-collateral.mp4", "THIS25-010_B_church-s_ss25-collateral.mp4", "THIS25-010_C_church-s_ss25-collateral.mp4"], ""],
+  ["GBR", "Church's", "Holiday24 Collateral", "THIS25-009", "2025", ["THIS25-009_A_church-s_holiday24-collateral.mp4", "THIS25-009_B_church-s_holiday24-collateral.mp4", "THIS25-009_C_church-s_holiday24-collateral.mp4", "THIS25-009_D_church-s_holiday24-collateral.mp4"], ""],
+  ["APAC", "Prada", "Making Of Prada Cafe", "THIS25-008", "2025", ["THIS25-008_A_prada_making-of-prada-cafe.mp4", "THIS25-008_B_prada_making-of-prada-cafe.mp4", "THIS25-008_C_prada_making-of-prada-cafe.mp4", "THIS25-008_D_prada_making-of-prada-cafe.mp4"], ""],
+  ["ITA", "Prada", "Frames", "THIS25-007", "2025", ["THIS25-007_A_prada_frames.mp4", "THIS25-007_B_prada_frames.mp4", "THIS25-007_C_prada_frames.mp4"], "THIS25-007.html"],
+  ["FRA", "Miu Miu", "FW25 TikTok Teaser", "THIS25-006", "2025", ["THIS25-006_miu-miu_fw25-tiktok-teaser.mp4"], ""],
+  ["ITA", "Prada", "GRWM Benedetta Porcaroli", "THIS25-005", "2025", ["THIS25-005_prada_grwm-benedetta-porcaroli.mp4"], ""],
+  ["ITA", "Prada", "May Issue BTS", "THIS25-004", "2025", ["THIS25-004_A_prada_may-issue-bts.mp4", "THIS25-004_B_prada_may-issue-bts.mp4", "THIS25-004_C_prada_may-issue-bts.mp4"], ""],
+  ["APAC", "Miu Miu", "Lucky Day", "THIS25-003", "2025", ["THIS25-003_miu-miu_lucky-day.mp4"], ""],
+  ["ITA", "Marchesi", "St. Valentine", "THIS25-002", "2025", ["THIS25-002_A_marchesi_st-valentine_elena.mp4", "THIS25-002_B_marchesi_st-valentine_eustachio.mp4", "THIS25-002_C_marchesi_st-valentine_george.mp4", "THIS25-002_D_marchesi_st-valentine_daisy.mp4"], ""],
+  ["ITA", "Prada", "GRWM Damson Idris", "THIS25-001", "2025", ["THIS25-001_prada_grwm-damson-idris.mp4"], ""],
+  ["ITA", "Prada", "Making of Fringes", "THIS24-021", "2024", ["THIS24-021_prada_making-of-fringes.mp4"], ""],
+  ["ITA", "Prada", "Made in FW", "THIS24-020", "2024", ["THIS24-020_prada_made-in-fw.mp4"], ""],
+  ["ITA", "Miu Miu", "Miu Miu SS26", "THIS24-019", "2024", ["THIS24-019_miu-miu_ss26.mp4"], ""],
+  ["ITA", "Miu Miu", "Miu Miu SS25", "THIS24-018", "2024", ["THIS24-018_miu-miu_ss25.mp4"], ""],
+  ["FRA", "Miu Miu", "Miu Miu Teaser FW24", "THIS24-017", "2024", ["THIS24-017_miu-miu_teaser-fw24.mp4"], ""],
+  ["FRA", "Miu Miu", "Miu Miu Teaser FW25", "THIS24-016", "2024", ["THIS24-016_miu-miu_teaser-fw25.mp4"], ""],
+  ["ITA", "Prada", "Making of Buckle", "THIS24-015", "2024", ["THIS24-015_prada_making-of-buckle.mp4"], ""],
+  ["ITA", "Prada", "Making of Bows", "THIS24-014", "2024", ["THIS24-014_prada_making-of-bows.mp4"], ""],
+  ["ITA", "Prada", "Making of Mirrors", "THIS24-013", "2024", ["THIS24-013_prada_making-of-mirrors.mp4"], ""],
+  ["ITA", "Prada", "Making of Arquè", "THIS24-012", "2024", ["THIS24-012_prada_making-of-arque.mp4"], ""],
+  ["ITA", "Prada", "Making of Galleria Fiori", "THIS24-011", "2024", ["THIS24-011_prada_making-of-galleria-fiori.mp4"], ""],
+  ["APAC", "Miu Miu", "Reverie Eyewear", "THIS24-010", "2024", ["THIS24-010_miu-miu_reverie-eyewear.mp4"], ""],
+  ["GBR", "Church's", "SS24 Off Town", "THIS24-009", "2024", ["THIS24-009_A_church-s_ss24-off-town.mp4", "THIS24-009_B_church-s_ss24-off-town.mp4", "THIS24-009_C_church-s_ss24-off-town.mp4", "THIS24-009_D_church-s_ss24-off-town.mp4"], ""],
+  ["ITA", "Linea Rossa", "Linea Rossa Eyewear", "THIS24-008", "2024", ["THIS24-008_A_linea-rossa_eyewear_tondi.mp4", "THIS24-008_B_linea-rossa_eyewear_quadrati.mp4", "THIS24-008_C_linea-rossa_eyewear_mascherina.mp4"], ""],
+  ["ITA", "Prada", "GRWM Sana Minatozaki", "THIS24-007", "2024", ["THIS24-007_prada_grwm-sana-minatozaki.mp4"], ""],
+  ["ITA", "Miu Miu", "Personalization", "THIS24-006", "2024", ["THIS24-006_miu-miu_personalization.mp4"], ""],
+  ["FRA", "Miu Miu", "Gymnasium", "THIS24-005", "2024", ["THIS24-005_miu-miu_gymnasium.mp4"], ""],
+  ["UAE", "Prada", "Ramadan 24", "THIS24-004", "2024", ["THIS24-004_prada_ramadan-24.mp4"], ""],
+  ["USA", "Prada", "Holiday Youtube Content", "THIS24-003", "2024", ["THIS24-003_A_prada_holiday-youtube-content.mp4", "THIS24-003_B_prada_holiday-youtube-content.mp4", "THIS24-003_C_prada_holiday-youtube-content.mp4", "THIS24-003_D_prada_holiday-youtube-content.mp4"], ""],
+  ["ITA", "Marchesi", "Holiday Campaign", "THIS24-002", "2024", ["THIS24-002_A_marchesi_holiday-campaign.mp4", "THIS24-002_B_marchesi_holiday-campaign.mp4", "THIS24-002_C_marchesi_holiday-campaign.mp4", "THIS24-002_D_marchesi_holiday-campaign.mp4"], ""],
+  ["ITA", "Car Shoe", "Making Of Car Shoe", "THIS24-001", "2024", ["THIS24-001_car-shoe_making-of-car-shoe.mp4"], ""]
+];
+
+const list = document.getElementById("list");
+const stage = document.getElementById("stage");
+const pId = document.getElementById("p-id");
+const pBrand = document.getElementById("p-brand");
+const pTitle = document.getElementById("p-title");
+const thumb = document.getElementById("thumb");
+const pv = document.getElementById("pv");
+const reel = document.getElementById("reel");
+const rcount = document.getElementById("rcount");
+let shot = 0;
+
+pv.addEventListener("error", () => thumb.classList.remove("playing"));
+
+
+function showShot(){
+  const files = current < 0 ? [] : data[current][5];
+  thumb.classList.remove("playing");
+  reel.classList.toggle("on", files.length > 1);
+  if (files.length > 1) {
+    rcount.textContent = String(shot + 1).padStart(2, "0") + " / " + String(files.length).padStart(2, "0");
+  }
+  if (!files.length) { pv.removeAttribute("src"); return; }
+  pv.src = "video/" + files[shot];
+  pv.play().then(() => thumb.classList.add("playing")).catch(() => {});
+}
+
+function step(n){
+  const files = current < 0 ? [] : data[current][5];
+  if (files.length < 2) return;
+  shot = (shot + n + files.length) % files.length;
+  showShot();
+}
+document.getElementById("rprev").addEventListener("click", () => step(-1));
+document.getElementById("rnext").addEventListener("click", () => step(1));
+const els = [];
+
+data.forEach(([code,brand,title,id,year,files,page], i) => {
+  const b = document.createElement(page ? "a" : "button");
+  if (page) b.href = page;
+  b.className = "row";
+  b.innerHTML = '<span class="code"></span><span class="bname"></span><span class="name"></span><span class="yr"></span>';
+  b.querySelector(".code").textContent = code;
+  b.querySelector(".bname").textContent = brand;
+  b.querySelector(".name").textContent = title;
+  b.querySelector(".yr").textContent = year;
+  b.addEventListener("mouseenter", () => setActive(i));
+  b.addEventListener("focus", () => setActive(i));
+  list.appendChild(b);
+  els.push(b);
+});
+
+let current = -1;
+function setActive(i){
+  if (i === current) return;
+  if (els[current]) els[current].classList.remove("is-active");
+  current = i;
+  if (i < 0){ stage.classList.remove("active"); return; }
+  const [,brand,title,id] = data[i];
+  pId.textContent = id;
+  pBrand.textContent = brand;
+  pTitle.textContent = title;
+  els[i].classList.add("is-active");
+  stage.classList.add("active");
+
+  shot = 0;
+  showShot();
+}
+
+const visible = new Set();
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    const i = els.indexOf(e.target);
+    if (e.isIntersecting) visible.add(i); else visible.delete(i);
+  });
+  if (visible.size) setActive(Math.min(...visible));
+  else if (window.scrollY < 40) setActive(-1);
+}, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+
+els.forEach(el => io.observe(el));
+
+</script>
+
+</body>
+</html>
