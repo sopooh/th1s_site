@@ -1,2 +1,4 @@
 .DS_Store
 .claude/settings.local.json
+# video interi: troppo pesanti per GitHub, vanno su un servizio video
+full/

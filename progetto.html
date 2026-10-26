@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>th1s.prd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF7;--ink:#111110;--muted:#8C8C86;--line:#E2E1DB;--thumb:#EFEEE9;
+  --sans:'Archivo',-apple-system,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;padding:24px 32px 32px}
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rule{border-top:1px solid var(--line)}
+.ph{font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--muted)}
+a{color:inherit}
+
+nav{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:16px}
+.wordmark{font-size:15px;letter-spacing:-.02em;font-weight:700;color:var(--ink);text-decoration:none}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a[aria-current]{color:var(--ink)}
+
+.crumb{display:flex;justify-content:space-between;padding:12px 0 24px}
+.crumb a{text-decoration:none;transition:color .2s}
+.crumb a:hover{color:var(--ink)}
+
+/* ---------- video: parte da solo, formato preso dal file ---------- */
+.hero{position:relative;width:100%;aspect-ratio:16/9;max-height:84vh;margin:0 auto;
+  background:var(--thumb);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
+.hero video.ready{opacity:1}
+.hero iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;opacity:0;transition:opacity .3s}
+.hero iframe.ready{opacity:1}
+
+/* ---------- player: tap = play/pausa, tieni premuto a destra/sinistra = x2 avanti/indietro ---------- */
+.hero{touch-action:pan-y;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer}
+.hero .zone{position:absolute;inset:0;z-index:2}
+.hero .badge{position:absolute;top:50%;transform:translateY(-50%);z-index:3;font-family:var(--mono);font-size:12px;
+  color:#fff;opacity:0;transition:opacity .2s;pointer-events:none}
+.hero .badge.l{left:24px}
+.hero .badge.r{right:24px}
+.hero .badge.on{opacity:1}
+.hero .pp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;width:48px;height:48px;
+  opacity:0;transition:opacity .2s;pointer-events:none;color:#fff}
+.hero .pp.on{opacity:1}
+.hero .pp svg{width:100%;height:100%;display:block}
+
+.bar{position:absolute;left:0;right:0;bottom:0;z-index:4;display:flex;align-items:center;gap:12px;padding:12px 16px;
+  color:#fff;background:linear-gradient(to top,rgba(0,0,0,.35),rgba(0,0,0,0));opacity:0;transition:opacity .2s}
+.hero:hover .bar,.hero.paused .bar,.hero:focus-within .bar,.hero.touched .bar{opacity:1}
+.bar button{border:0;background:none;color:inherit;cursor:pointer;width:24px;height:24px;padding:0;flex:none;display:flex;align-items:center;justify-content:center}
+.bar button svg{width:14px;height:14px}
+.bar .time{font-family:var(--mono);font-size:12px;flex:none;min-width:88px;text-align:right}
+.track-bar{position:relative;flex:1;height:24px;cursor:pointer;touch-action:none}
+.track-bar::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(255,255,255,.45)}
+.track-bar .fill{position:absolute;left:0;top:50%;height:1px;margin-top:0;background:#fff;width:0}
+.track-bar .knob{position:absolute;top:50%;width:9px;height:9px;margin:-4px 0 0 -4px;border-radius:50%;background:#fff;left:0}
+
+/* ---------- riga metadati con filetti, come Prada Index ---------- */
+.metarow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid var(--ink);margin-top:24px}
+.metarow > *{border-left:1px solid var(--ink);padding:2px 8px 4px;font-family:var(--mono);font-size:12px;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:8px;min-height:24px}
+.metarow > *:last-child{border-right:1px solid var(--ink)}
+.metarow button{border:0;background:none;padding:0 4px;cursor:pointer;color:var(--muted);font:inherit;font-size:16px;line-height:1;transition:color .2s}
+.metarow button:hover{color:var(--ink)}
+
+/* ---------- titolo e brand: stesso carattere della nota sticky dell'indice ---------- */
+.body{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding-top:16px}
+.pid{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.pbrand{font-size:15px;letter-spacing:.02em;color:var(--muted);margin-top:8px}
+.ptitle{font-size:40px;line-height:1.1;letter-spacing:-.01em;font-weight:400;margin-top:4px}
+
+.desc p{font-size:16px;line-height:1.5;max-width:620px}
+.desc p + p{margin-top:16px}
+.sources{margin-top:24px;max-width:620px}
+.sources ul{list-style:none;margin-top:8px;border-top:1px solid var(--line)}
+.sources li{border-bottom:1px solid var(--line)}
+.sources a{display:grid;grid-template-columns:110px 1fr auto;gap:8px;align-items:baseline;padding:8px 0;
+  text-decoration:none;font-size:14px;transition:opacity .2s}
+.sources a .pub{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sources a .go{font-size:12px;color:var(--muted)}
+.sources a:hover{opacity:.55}
+.facts{display:grid;grid-template-columns:110px 1fr;max-width:620px;margin-top:24px}
+.facts > div{display:contents}
+.facts dt,.facts dd{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.facts dt{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.nodesc{font-size:14px;color:var(--muted)}
+
+/* ---------- varianti: fila di card come le righe progetto di Prada Index ---------- */
+.variants{margin-top:96px}
+.variants .head{display:flex;justify-content:space-between;padding-bottom:12px}
+.row{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.row::-webkit-scrollbar{display:none}
+.card{flex:0 0 260px;border:0;background:none;padding:0;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.card .m{position:relative;aspect-ratio:4/5;background:var(--thumb);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .l{display:block;margin-top:8px;font-size:14px;font-weight:500;line-height:1.25}
+.card .s{display:block;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:2px}
+.card.is-current .m{outline:1px solid var(--ink);outline-offset:-1px}
+.card:hover .l{text-decoration:underline;text-underline-offset:3px}
+
+.next-project{margin-top:96px;display:block;text-decoration:none;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.next-project .t{font-size:28px;line-height:1.2;margin-top:8px;transition:opacity .2s}
+.next-project .t span{color:var(--muted)}
+.next-project:hover .t{opacity:.55}
+
+.missing{padding:96px 0;font-size:16px}
+footer{display:flex;justify-content:space-between;margin-top:48px;padding-top:12px}
+
+@media (max-width:820px){
+  body{padding:20px}
+  .hero{max-height:none}
+  /* su telefono ID e brand stanno già sotto: restano mercato, anno, contatore */
+  .metarow{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .metarow > *:first-child,.metarow > *:last-child{display:none}
+  .metarow > *:nth-child(4){border-right:1px solid var(--ink)}
+  .body{grid-template-columns:1fr;gap:24px}
+  .ptitle{font-size:26px}
+  .card{flex-basis:200px}
+  .variants{margin-top:48px}
+  .next-project .t{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="wordmark" href="index.html">th1s.prd</a>
+  <div class="nav-links">
+    <a href="index.html" aria-current="page">Work</a>
+    <a href="#">Studio</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+<div class="rule"></div>
+<div class="crumb">
+  <a class="eyebrow" href="index.html">&lsaquo; Index</a>
+  <span class="eyebrow" id="crumb-brand"></span>
+</div>
+
+<main id="page">
+  <div class="hero" id="hero-box">
+    <span class="ph">th1s.prd</span>
+    <video id="hero" muted loop playsinline autoplay preload="auto"></video>
+    <div class="zone" id="zone" aria-hidden="true"></div>
+    <span class="badge l" id="badge-l">&#9664;&#9664; 2&times;</span>
+    <span class="badge r" id="badge-r">2&times; &#9654;&#9654;</span>
+    <span class="pp" id="pp"></span>
+    <div class="bar" id="bar">
+      <button type="button" id="btn-play" aria-label="Pause"></button>
+      <div class="track-bar" id="track-bar" role="slider" tabindex="0" aria-label="Position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <span class="fill" id="fill"></span><span class="knob" id="knob"></span>
+      </div>
+      <span class="time" id="time">00:00 / 00:00</span>
+      <button type="button" id="btn-sound" aria-label="Sound on"></button>
+    </div>
+  </div>
+
+  <div class="metarow" id="metarow"></div>
+
+  <div class="body">
+    <div>
+      <div class="pid" id="p-id"></div>
+      <div class="pbrand" id="p-brand"></div>
+      <h1 class="ptitle" id="p-title"></h1>
+    </div>
+    <div class="desc" id="desc"></div>
+  </div>
+
+  <section class="variants" id="variants">
+    <div class="rule"></div>
+    <div class="head"><span class="eyebrow" style="padding-top:12px">Variants</span><span class="eyebrow" id="v-count" style="padding-top:12px"></span></div>
+    <div class="row" id="vrow"></div>
+  </section>
+
+  <a class="next-project" id="next-project" href="#">
+    <span class="eyebrow">Next</span>
+    <div class="t" id="next-t"></div>
+  </a>
+</main>
+
+<footer>
+  <span class="eyebrow">th1s.prd (24/26)</span>
+  <span class="eyebrow" style="text-align:right">Milano<br>[02]</span>
+</footer>
+
+<script src="data.js"></script>
+<script src="descrizioni.js"></script>
+<script src="vimeo.js" onerror="window.vimeo={}"></script>
+<script>
+// Dove stanno i video INTERI (stessi nomi dei loop). In locale la cartella full/;
+// online si cambia con l'indirizzo del servizio video, es. "https://xxx.b-cdn.net/full/".
+// Se il file intero manca, la pagina usa il loop di video/.
+const FULL_BASE = "full/";
+</script>
+<script>
+// Pagina progetto unica: progetto.html?id=THIS26-015
+// Legge data.js (dati del progetto) e descrizioni.js (testo, fonti, crediti).
+
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, "0");
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+const id = new URLSearchParams(location.search).get("id") || "";
+const idx = data.findIndex(r => r[3] === id);
+
+// dal nome file: lettera della variante e coda descrittiva ("benedetta-porcaroli" -> "Benedetta Porcaroli")
+function variantInfo(file){
+  const parts = file.replace(/\.mp4$/, "").split("_");
+  const hasLetter = /^[A-Z]$/.test(parts[1] || "");
+  const letter = hasLetter ? parts[1] : "";
+  const tail = parts.slice(hasLetter ? 4 : 3).join(" ")
+    .split(/[-\s]+/).filter(Boolean).map(w => w[0].toUpperCase() + w.slice(1)).join(" ");
+  return { letter, tail };
+}
+
+if (idx < 0) {
+  $("page").innerHTML = '<p class="missing">Project not found. <a href="index.html">Back to the index</a></p>';
+} else {
+  const [market, brand, title, pid, year, files] = data[idx];
+  const info = (typeof descrizioni !== "undefined" && descrizioni[pid]) || null;
+  let cur = 0;
+
+  document.title = brand + " " + title + " — th1s.prd";
+  $("crumb-brand").textContent = brand;
+  $("p-id").textContent = pid;
+  $("p-brand").textContent = brand;
+  $("p-title").textContent = title;
+
+  // ----- riga metadati -----
+  const mr = $("metarow");
+  mr.append(el("span", null, pid), el("span", null, market), el("span", null, year));
+  const counter = el("span");
+  if (files.length > 1) {
+    const prev = el("button", null, "‹"); prev.setAttribute("aria-label", "Previous variant");
+    const next = el("button", null, "›"); next.setAttribute("aria-label", "Next variant");
+    const txt = el("span"); txt.id = "count";
+    prev.onclick = () => show((cur - 1 + files.length) % files.length);
+    next.onclick = () => show((cur + 1) % files.length);
+    counter.append(prev, txt, next);
+  } else {
+    counter.textContent = files.length ? "1 film" : "—";
+  }
+  mr.append(counter, el("span", null, brand));
+
+  // ----- descrizione -----
+  const desc = $("desc");
+  if (info && info.testo) {
+    info.testo.trim().split(/\n\s*\n/).forEach(p => desc.append(el("p", null, p.trim())));
+    if (info.crediti || info.canali) {
+      const dl = el("dl", "facts");
+      (info.crediti || []).forEach(([k, v]) => { const d = el("div"); d.append(el("dt", null, k), el("dd", null, v)); dl.append(d); });
+      if (info.canali) { const d = el("div"); d.append(el("dt", null, "Channels"), el("dd", null, info.canali)); dl.append(d); }
+      desc.append(dl);
+    }
+  }
+  if (info && info.press && info.press.length) {
+    const s = el("div", "sources");
+    s.append(el("span", "eyebrow", "Press"));
+    const ul = el("ul");
+    info.press.forEach(f => {
+      const li = el("li");
+      const a = el("a");
+      a.append(el("span", "pub", f.t), el("span", null, f.a || ""), el("span", "go", "\u2197"));
+      a.href = f.u; a.target = "_blank"; a.rel = "noopener";
+      li.append(a); ul.append(li);
+    });
+    s.append(ul);
+    desc.append(s);
+  }
+  if (!desc.children.length) desc.remove();
+
+  // ----- video principale -----
+  const box = $("hero-box"), hero = $("hero");
+  hero.addEventListener("loadedmetadata", () => {
+    if (hero.videoWidth && hero.videoHeight) box.style.aspectRatio = hero.videoWidth + " / " + hero.videoHeight;
+    // i verticali non devono superare l'altezza dello schermo: si stringono in larghezza
+    box.style.maxWidth = hero.videoHeight > hero.videoWidth ? "calc(84vh * " + (hero.videoWidth / hero.videoHeight) + ")" : "";
+  });
+  hero.addEventListener("playing", () => hero.classList.add("ready"));
+  // video intero, e se manca il loop
+  hero.addEventListener("error", () => {
+    if (hero.style.display === "none") return;      // stiamo usando Vimeo
+    hero.classList.remove("ready");
+    const f = files[cur];
+    if (f && hero.dataset.full === "1") { hero.dataset.full = "0"; hero.src = "video/" + f; if (wantPlay) hero.play().catch(() => {}); }
+  });
+
+  // ----- sorgente del video: Vimeo se c'è in vimeo.js, altrimenti file intero, altrimenti loop -----
+  // P si comporta come un <video>, così il player sotto non deve sapere da dove arriva il video.
+  const vmap = window.vimeo || {};
+  let vp = null, vframe = null;
+  const vs = { t: 0, d: 0, paused: true, muted: true, seeking: false };
+  const P = {
+    get paused(){ return vp ? vs.paused : hero.paused; },
+    get currentTime(){ return vp ? vs.t : hero.currentTime; },
+    set currentTime(t){
+      if (!vp) { hero.currentTime = t; return; }
+      vs.t = t; vs.seeking = true;
+      vp.setCurrentTime(t).catch(() => {}).finally(() => { vs.seeking = false; });
+    },
+    get duration(){ return vp ? vs.d : hero.duration; },
+    get seeking(){ return vp ? vs.seeking : hero.seeking; },
+    set playbackRate(r){ if (vp) vp.setPlaybackRate(r).catch(() => {}); else hero.playbackRate = r; },
+    get muted(){ return vp ? vs.muted : hero.muted; },
+    set muted(m){ if (vp) { vs.muted = m; vp.setMuted(m).catch(() => {}); paintSound(); } else hero.muted = m; },
+    get hasAudio(){ return vp ? true : hero.dataset.full === "1"; },
+    play(){ return vp ? vp.play() : hero.play(); },
+    pause(){ return vp ? vp.pause().catch(() => {}) : hero.pause(); }
+  };
+
+  let sdk = null;
+  const loadSDK = () => sdk || (sdk = new Promise((ok, ko) => {
+    const s = document.createElement("script");
+    s.src = "https://player.vimeo.com/api/player.js"; s.onload = ok; s.onerror = ko;
+    document.head.append(s);
+  }));
+
+  function dropVimeo(){
+    if (vp) { vp.destroy().catch(() => {}); vp = null; }
+    if (vframe) { vframe.remove(); vframe = null; }
+  }
+  function useVimeo(v){
+    hero.removeAttribute("src"); hero.load(); hero.style.display = "none";
+    return loadSDK().then(() => {
+      vframe = document.createElement("iframe");
+      vframe.allow = "autoplay; fullscreen; picture-in-picture";
+      vframe.title = document.title;
+      vframe.src = "https://player.vimeo.com/video/" + v.id + "?" + (v.h ? "h=" + v.h + "&" : "") +
+        "autoplay=1&muted=1&loop=1&controls=0&playsinline=1&dnt=1&title=0&byline=0&portrait=0";
+      box.insertBefore(vframe, $("zone"));
+      vp = new Vimeo.Player(vframe);
+      Object.assign(vs, { t: 0, d: 0, paused: true, muted: true });
+      vp.on("loaded", () => {
+        Promise.all([vp.getVideoWidth(), vp.getVideoHeight(), vp.getDuration()]).then(([w, h, d]) => {
+          vs.d = d;
+          box.style.aspectRatio = w + " / " + h;
+          box.style.maxWidth = h > w ? "calc(84vh * " + (w / h) + ")" : "";
+          paintTime(); paintSound();
+        });
+      });
+      vp.on("play", () => { vs.paused = false; vframe.classList.add("ready"); });
+      vp.on("pause", () => { vs.paused = true; });
+      vp.on("timeupdate", e => { vs.t = e.seconds; vs.d = e.duration; paintTime(); });
+      vp.on("volumechange", () => vp.getMuted().then(m => { vs.muted = m; paintSound(); }));
+      if (wantPlay) vp.play().catch(() => {});
+    }).catch(() => { dropVimeo(); hero.style.display = ""; return false; });
+  }
+
+  // ----- player -----
+  const ICON_PLAY  = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>';
+  const ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="4" width="5" height="16"/><rect x="14" y="4" width="5" height="16"/></svg>';
+  const btn = $("btn-play"), pp = $("pp"), zone = $("zone"), tb = $("track-bar");
+  const fmt = t => { t = Math.max(0, t || 0); return pad(Math.floor(t / 60)) + ":" + pad(Math.floor(t % 60)); };
+  let wantPlay = true;      // stato scelto dall'utente
+  let mode = null;          // null | "ff" | "rw"
+  let rwFrame = 0, rwLast = 0;
+
+  function paintState(){
+    const playing = wantPlay;
+    btn.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
+    btn.setAttribute("aria-label", playing ? "Pause" : "Play");
+    box.classList.toggle("paused", !playing);
+  }
+  function flash(){
+    pp.innerHTML = wantPlay ? ICON_PLAY : ICON_PAUSE;
+    pp.classList.add("on"); clearTimeout(flash.t); flash.t = setTimeout(() => pp.classList.remove("on"), 450);
+  }
+  function togglePlay(){
+    wantPlay = !wantPlay;
+    if (wantPlay) P.play().catch(() => {}); else P.pause();
+    paintState(); flash();
+  }
+  function paintTime(){
+    const d = P.duration || 0, t = P.currentTime || 0, r = d ? t / d : 0;
+    $("fill").style.width = (r * 100) + "%";
+    $("knob").style.left = (r * 100) + "%";
+    $("time").textContent = fmt(t) + " / " + fmt(d);
+    tb.setAttribute("aria-valuenow", Math.round(r * 100));
+  }
+  hero.addEventListener("timeupdate", paintTime);
+  hero.addEventListener("loadedmetadata", paintTime);
+  (function loop(){ if (!P.paused || mode) paintTime(); requestAnimationFrame(loop); })();
+
+  // avanti x2: playbackRate; indietro x2: il browser non riproduce al contrario, quindi si sposta il tempo a mano
+  function startMode(m){
+    if (mode === m) return;
+    mode = m;
+    $("badge-" + (m === "ff" ? "r" : "l")).classList.add("on");
+    if (m === "ff") { P.playbackRate = 2; P.play().catch(() => {}); }
+    else {
+      P.pause(); rwLast = performance.now();
+      let pos = P.currentTime;                // posizione tenuta a parte: currentTime è lento ad aggiornarsi durante i seek
+      const step = now => {
+        if (mode !== "rw") return;
+        const dt = (now - rwLast) / 1000; rwLast = now;
+        const d = P.duration || 0;
+        pos -= dt * 2;
+        if (pos < 0) pos = d ? pos + d : 0;      // il loop gira anche all'indietro
+        if (!P.seeking) P.currentTime = pos;
+        rwFrame = requestAnimationFrame(step);
+      };
+      rwFrame = requestAnimationFrame(step);
+    }
+  }
+  function stopMode(){
+    if (!mode) return;
+    cancelAnimationFrame(rwFrame);
+    P.playbackRate = 1;
+    document.querySelectorAll(".badge").forEach(b => b.classList.remove("on"));
+    mode = null;
+    if (wantPlay) P.play().catch(() => {}); else P.pause();
+  }
+
+  // gesture sul video: tocco breve = play/pausa; tenere premuto nel terzo destro/sinistro = x2
+  let holdT = 0, held = false, downX = 0;
+  zone.addEventListener("pointerdown", e => {
+    if (e.button !== 0) return;
+    held = false; downX = e.clientX;
+    const r = zone.getBoundingClientRect(), x = (e.clientX - r.left) / r.width;
+    const side = x > 2/3 ? "ff" : x < 1/3 ? "rw" : null;
+    box.classList.add("touched"); clearTimeout(box.t); box.t = setTimeout(() => box.classList.remove("touched"), 2500);
+    if (side) holdT = setTimeout(() => { held = true; startMode(side); }, 250);
+    try { zone.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  const release = e => {
+    clearTimeout(holdT);
+    if (held) { stopMode(); held = false; return; }
+    if (e.type === "pointerup" && Math.abs(e.clientX - downX) < 10) togglePlay();
+  };
+  zone.addEventListener("pointerup", release);
+  zone.addEventListener("pointercancel", release);
+  zone.addEventListener("contextmenu", e => e.preventDefault());
+
+  btn.addEventListener("click", e => { e.stopPropagation(); togglePlay(); });
+
+  // audio: parte muto (i browser lo impongono per l'autoplay), si attiva dal pulsante
+  const ICON_MUTED = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="M17 9l5 6M22 9l-5 6"/></svg>';
+  const ICON_SOUND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="M17 8.5a5 5 0 010 7M19.5 6a8.5 8.5 0 010 12"/></svg>';
+  const snd = $("btn-sound");
+  const paintSound = () => {
+    snd.innerHTML = P.muted ? ICON_MUTED : ICON_SOUND;
+    snd.setAttribute("aria-label", P.muted ? "Sound on" : "Sound off");
+    snd.style.visibility = P.hasAudio ? "visible" : "hidden";   // i loop non hanno audio
+  };
+  snd.addEventListener("click", e => { e.stopPropagation(); P.muted = !P.muted; paintSound(); });
+  hero.addEventListener("loadedmetadata", paintSound);
+  hero.addEventListener("volumechange", paintSound);
+  paintSound();
+
+  // barra: clic o trascinamento per spostarsi
+  const seekTo = e => {
+    const r = tb.getBoundingClientRect();
+    const x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    if (P.duration) P.currentTime = x * P.duration;
+    paintTime();
+  };
+  let scrubbing = false;
+  tb.addEventListener("pointerdown", e => { scrubbing = true; tb.setPointerCapture(e.pointerId); P.pause(); seekTo(e); });
+  tb.addEventListener("pointermove", e => { if (scrubbing) seekTo(e); });
+  const endScrub = () => { if (!scrubbing) return; scrubbing = false; if (wantPlay) P.play().catch(() => {}); };
+  tb.addEventListener("pointerup", endScrub);
+  tb.addEventListener("pointercancel", endScrub);
+
+  // tastiera: spazio = play/pausa; frecce tenute premute = x2
+  document.addEventListener("keydown", e => {
+    if (e.target.closest && e.target.closest("input,textarea")) return;
+    if (e.code === "Space") { e.preventDefault(); if (!e.repeat) togglePlay(); }
+    else if (e.code === "ArrowRight") { e.preventDefault(); startMode("ff"); }
+    else if (e.code === "ArrowLeft")  { e.preventDefault(); startMode("rw"); }
+  });
+  document.addEventListener("keydown", e => { if (e.code === "KeyM" && !e.repeat) { P.muted = !P.muted; paintSound(); } });
+  document.addEventListener("keyup", e => { if (e.code === "ArrowRight" || e.code === "ArrowLeft") stopMode(); });
+  window.addEventListener("blur", stopMode);
+
+  paintState();
+
+  function show(i){
+    if (!files.length) return;
+    cur = i;
+    stopMode(); wantPlay = true; paintState();
+    dropVimeo();
+    hero.classList.remove("ready");
+    const v = vmap[files[i].replace(/\.mp4$/, "")];
+    const local = () => {
+      hero.style.display = "";
+      hero.dataset.full = "1";
+      hero.src = FULL_BASE + files[i];
+      hero.play().catch(() => {});
+      paintSound();
+    };
+    if (v) useVimeo(v).then(r => { if (r === false) local(); }); else local();
+    if ($("count")) $("count").textContent = pad(i + 1) + " / " + pad(files.length);
+    document.querySelectorAll(".card").forEach((c, k) => c.classList.toggle("is-current", k === i));
+  }
+
+  // ----- varianti -----
+  if (files.length > 1) {
+    $("v-count").textContent = pad(files.length);
+    const row = $("vrow");
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      const v = e.target.querySelector("video");
+      if (!v) return;
+      if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else v.pause();
+    }), { threshold: .25 });
+
+    files.forEach((f, i) => {
+      const { letter, tail: autoTail } = variantInfo(f);
+      const tail = (info && info.nomi && info.nomi[letter]) || autoTail;
+      const b = el("button", "card");
+      const m = el("span", "m"); m.append(el("span", "ph", "th1s.prd"));
+      const v = document.createElement("video");
+      v.dataset.src = "video/" + f; v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none";
+      v.addEventListener("error", () => v.remove());
+      m.append(v);
+      b.append(m, el("span", "l", tail || title), el("span", "s", pid + (letter ? "_" + letter : "")));
+      b.setAttribute("aria-label", "Show variant " + (letter || i + 1));
+      b.onclick = () => { show(i); window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); };
+      row.append(b);
+      io.observe(b);
+    });
+  } else {
+    $("variants").remove();
+  }
+
+  // ----- progetto successivo -----
+  const n = data[(idx + 1) % data.length];
+  $("next-project").href = "progetto.html?id=" + n[3];
+  const nt = $("next-t");
+  nt.append(el("span", null, n[1] + " · "), document.createTextNode(n[2]));
+
+  show(0);
+}
+</script>
+
+</body>
+</html>
