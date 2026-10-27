@@ -133,14 +133,15 @@ footer{display:flex;justify-content:space-between;margin-top:48px;padding-top:12
 <nav>
   <a class="wordmark" href="index.html">th1s.prd</a>
   <div class="nav-links">
-    <a href="index.html" aria-current="page">Work</a>
-    <a href="#">Studio</a>
-    <a href="#">Contact</a>
+    <a href="index.html">Work</a>
+    <a href="archive.html" aria-current="page">Index</a>
+    <a href="studio.html">Studio</a>
+    <a href="studio.html#contact">Contact</a>
   </div>
 </nav>
 <div class="rule"></div>
 <div class="crumb">
-  <a class="eyebrow" href="index.html">&lsaquo; Index</a>
+  <a class="eyebrow" href="archive.html">&lsaquo; Index</a>
   <span class="eyebrow" id="crumb-brand"></span>
 </div>
 
@@ -222,7 +223,7 @@ function variantInfo(file){
 }
 
 if (idx < 0) {
-  $("page").innerHTML = '<p class="missing">Project not found. <a href="index.html">Back to the index</a></p>';
+  $("page").innerHTML = '<p class="missing">Project not found. <a href="archive.html">Back to the index</a></p>';
 } else {
   const [market, brand, title, pid, year, files] = data[idx];
   const info = (typeof descrizioni !== "undefined" && descrizioni[pid]) || null;
