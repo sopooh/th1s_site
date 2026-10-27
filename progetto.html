@@ -330,7 +330,9 @@ if (idx < 0) {
     if (vframe) { vframe.remove(); vframe = null; }
   }
   function useVimeo(v){
-    hero.removeAttribute("src"); hero.load(); hero.style.display = "none";
+    // mentre Vimeo carica si vede subito il loop HD; Vimeo lo sostituisce appena parte
+    hero.style.display = ""; hero.dataset.full = "0"; hero.muted = true;
+    hero.src = "video/" + files[cur]; hero.play().catch(() => {});
     return loadSDK().then(() => {
       vframe = document.createElement("iframe");
       vframe.allow = "autoplay; fullscreen; picture-in-picture";
@@ -348,7 +350,10 @@ if (idx < 0) {
           paintTime(); paintSound();
         });
       });
-      vp.on("play", () => { vs.paused = false; vframe.classList.add("ready"); });
+      vp.on("play", () => {
+        vs.paused = false; vframe.classList.add("ready");
+        if (hero.getAttribute("src")) { hero.pause(); hero.removeAttribute("src"); hero.load(); hero.style.display = "none"; }
+      });
       vp.on("pause", () => { vs.paused = true; });
       vp.on("timeupdate", e => { vs.t = e.seconds; vs.d = e.duration; paintTime(); });
       vp.on("volumechange", () => vp.getMuted().then(m => { vs.muted = m; paintSound(); }));
