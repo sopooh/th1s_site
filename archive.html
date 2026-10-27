@@ -108,7 +108,15 @@ footer{display:flex;justify-content:space-between;padding-top:12px;margin-top:48
   .now .ptitle{font-size:26px}
   .statement{font-size:30px}
   .row .name,.row .bname{font-size:15px}
+  /* su telefono le colonne si stringono invece di uscire dallo schermo */
+  .body-grid>*{min-width:0}
+  .row,.labels .right{grid-template-columns:46px minmax(0,.8fr) minmax(0,1.2fr) 34px;gap:10px}
+  .labels .right .eyebrow{letter-spacing:.04em}
+  .row .name,.row .bname{overflow-wrap:anywhere}
+  .row .code,.row .yr{font-size:11px}
+  .nav-links{gap:14px}
 }
+html,body{overflow-x:hidden}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
