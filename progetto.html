@@ -193,6 +193,7 @@ footer{display:flex;justify-content:space-between;margin-top:48px;padding-top:12
 <script src="data.js"></script>
 <script src="descrizioni.js"></script>
 <script src="vimeo.js" onerror="window.vimeo={}"></script>
+<script src="vimeo_extra.js" onerror="window.vimeoExtra={}"></script>
 <script>
 // Dove stanno i video INTERI (stessi nomi dei loop). In locale la cartella full/;
 // online si cambia con l'indirizzo del servizio video, es. "https://xxx.b-cdn.net/full/".
@@ -294,7 +295,8 @@ if (idx < 0) {
 
   // ----- sorgente del video: Vimeo se c'è in vimeo.js, altrimenti file intero, altrimenti loop -----
   // P si comporta come un <video>, così il player sotto non deve sapere da dove arriva il video.
-  const vmap = window.vimeo || {};
+  // vimeo.js (archivio Prada) + vimeo_extra.js (lavori solo su Vimeo, file "vimeo:ID")
+  const vmap = Object.assign({}, (typeof vimeo !== "undefined" && vimeo) || {}, (typeof vimeoExtra !== "undefined" && vimeoExtra) || {});   // vimeo.js dichiara "const vimeo", che non finisce su window
   let vp = null, vframe = null;
   const vs = { t: 0, d: 0, paused: true, muted: true, seeking: false };
   const P = {
@@ -489,6 +491,12 @@ if (idx < 0) {
     hero.classList.remove("ready");
     const v = vmap[files[i].replace(/\.mp4$/, "")];
     const local = () => {
+      if (files[i].startsWith("vimeo:")) {         // solo su Vimeo e Vimeo non raggiungibile: resta la miniatura
+        const t = vmap[files[i]] && vmap[files[i]].thumb;
+        if (t) box.style.background = "var(--thumb) url(" + t + ") center/cover no-repeat";
+        return;
+      }
+      box.style.background = "";
       hero.style.display = "";
       hero.dataset.full = "1";
       hero.src = FULL_BASE + files[i];
@@ -507,6 +515,7 @@ if (idx < 0) {
     const io = new IntersectionObserver(entries => entries.forEach(e => {
       const v = e.target.querySelector("video");
       if (!v) return;
+      if (!v.dataset.src) return;
       if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else v.pause();
     }), { threshold: .25 });
 
@@ -516,8 +525,17 @@ if (idx < 0) {
       const b = el("button", "card");
       const m = el("span", "m"); m.append(el("span", "ph", "th1s.prd"));
       const v = document.createElement("video");
-      v.dataset.src = "video/" + f; v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none";
-      v.addEventListener("error", () => v.remove());
+      if (f.startsWith("vimeo:")) {
+        const t = vmap[f] && vmap[f].thumb;
+        if (t) { m.style.background = "var(--thumb) url(" + t + ") center/cover no-repeat"; m.firstChild.style.opacity = 0; }
+      }
+      // le card sono piccole: loop leggeri da video_sm/ (540px); se mancano, quelli HD
+      v.dataset.src = f.startsWith("vimeo:") ? "" : "video_sm/" + f; v.muted = true;
+      v.addEventListener("error", () => {
+        if (v.dataset.src.startsWith("video_sm/")) { v.dataset.src = "video/" + f; v.src = v.dataset.src; v.play().catch(() => {}); }
+        else v.remove();                                 // manca anche l'HD: resta il riquadro col logo
+      }); v.loop = true; v.playsInline = true; v.preload = "none";
+
       m.append(v);
       b.append(m, el("span", "l", tail || title), el("span", "s", pid + (letter ? "_" + letter : "")));
       b.setAttribute("aria-label", "Show variant " + (letter || i + 1));

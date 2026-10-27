@@ -51,7 +51,9 @@ nav{display:flex;justify-content:space-between;align-items:baseline;padding-bott
 
 .now{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .3s;color:var(--ink)}
 .stage.active .now{opacity:1;visibility:visible}
-.now .thumb{position:absolute;inset:0;background:var(--thumb);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.now .thumb{position:absolute;inset:0;background:var(--thumb) center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden}
+/* lavori solo su Vimeo: al posto del loop c'è la miniatura */
+.now .thumb.still span{opacity:0}
 .now .thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
 .now .thumb.playing video{opacity:1}
 .now .thumb span{font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--muted)}
@@ -166,6 +168,7 @@ footer{display:flex;justify-content:space-between;padding-top:12px;margin-top:48
 </footer>
 
 <script src="data.js"></script>
+<script src="vimeo_extra.js" onerror="window.vimeoExtra={}"></script>
 <script>
 
 const list = document.getElementById("list");
@@ -190,7 +193,19 @@ function showShot(){
     rcount.textContent = String(shot + 1).padStart(2, "0") + " / " + String(files.length).padStart(2, "0");
   }
   if (!files.length) { pv.removeAttribute("src"); return; }
-  pv.src = "video/" + files[shot];
+  const f = files[shot];
+  const vx = (typeof vimeoExtra !== "undefined" && vimeoExtra) || {};
+  if (f.startsWith("vimeo:")) {
+    // lavoro solo su Vimeo: niente loop, la colonna mostra la miniatura
+    pv.pause(); pv.removeAttribute("src");
+    const t = vx[f] && vx[f].thumb;
+    thumb.style.backgroundImage = t ? "url(" + t + ")" : "";
+    thumb.classList.toggle("still", !!t);
+    thumb.classList.toggle("playing", !!t);
+    return;
+  }
+  thumb.style.backgroundImage = ""; thumb.classList.remove("still");
+  pv.src = "video/" + f;
   pv.play().then(() => thumb.classList.add("playing")).catch(() => {});
 }
 
@@ -233,7 +248,10 @@ function setActive(i){
   stage.classList.add("active");
 
   shot = 0;
-  showShot();
+  // il video si carica solo quando la riga resta attiva un attimo: scorrendo veloce non si accodano download
+  clearTimeout(setActive.t);
+  thumb.classList.remove("playing");
+  setActive.t = setTimeout(showShot, 160);
 }
 
 const visible = new Set();
