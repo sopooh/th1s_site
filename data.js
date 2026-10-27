@@ -3,6 +3,7 @@
 // [market, brand, titolo, id, anno, [file...], pagina]
 // pagina: file HTML scritto a mano (es. THIS25-007.html) oppure "" per la pagina automatica.
 const data = [
+  ["ITA", "Prada", "SS27 M Show", "THIS26-025", "2026", ["THIS26-025_A_prada_ss27-m-show.mp4", "THIS26-025_B_prada_ss27-m-show.mp4", "THIS26-025_C_prada_ss27-m-show.mp4", "THIS26-025_D_prada_ss27-m-show.mp4", "THIS26-025_E_prada_ss27-m-show.mp4"], ""],
   ["ITA", "Prada", "SS27 Show Woman", "THIS26-024", "2026", ["THIS26-024_A_prada_ss27-show-woman_benedetta-porcaroli.mp4", "THIS26-024_B_prada_ss27-show-woman_bo-bragason.mp4", "THIS26-024_C_prada_ss27-show-woman_charlie-damelio.mp4", "THIS26-024_D_prada_ss27-show-woman_chisa.mp4", "THIS26-024_E_prada_ss27-show-woman_chung.mp4", "THIS26-024_F_prada_ss27-show-woman_emilia-clarke.mp4", "THIS26-024_G_prada_ss27-show-woman_gabrielle-union-dwyane-wade.mp4", "THIS26-024_H_prada_ss27-show-woman_maya-hawke.mp4", "THIS26-024_I_prada_ss27-show-woman_naomi-ackie.mp4", "THIS26-024_J_prada_ss27-show-woman_naomi-watts.mp4", "THIS26-024_K_prada_ss27-show-woman_win-metawin.mp4", "THIS26-024_L_prada_ss27-show-woman_yang-mi.mp4"], ""],
   ["ITA", "Prada", "SS27 Post Show", "THIS26-023", "2026", ["THIS26-023_prada_ss27-post-show.mp4"], ""],
   ["FRA", "Miu Miu", "SS27 Tiktok Show", "THIS26-022", "2026", ["THIS26-022_A_miu-miu_ss27-tiktok-show_miumiu-1.mp4", "THIS26-022_B_miu-miu_ss27-tiktok-show_miumiu-2.mp4", "THIS26-022_C_miu-miu_ss27-tiktok-show_miumiu-3.mp4", "THIS26-022_D_miu-miu_ss27-tiktok-show_miumiu-4.mp4", "THIS26-022_E_miu-miu_ss27-tiktok-show_miumiu-5.mp4", "THIS26-022_F_miu-miu_ss27-tiktok-show_miumiu-6.mp4"], ""],
@@ -17,7 +18,7 @@ const data = [
   ["ITA", "Prada", "Training FW25", "THIS26-013", "2026", ["THIS26-013_A_prada_training-fw25.mp4", "THIS26-013_B_prada_training-fw25.mp4", "THIS26-013_C_prada_training-fw25.mp4", "THIS26-013_D_prada_training-fw25.mp4"], ""],
   ["ITA", "Prada", "Making of Bonnie", "THIS26-012", "2026", ["THIS26-012_A_prada_making-of-bonnie_man.mp4", "THIS26-012_B_prada_making-of-bonnie_woman.mp4"], ""],
   ["USA", "Prada", "Prada Mode NYC", "THIS26-011", "2026", ["THIS26-011_A_prada_mode-nyc_namtan.mp4", "THIS26-011_B_prada_mode-nyc_hunter.mp4", "THIS26-011_C_prada_mode-nyc_kentato.mp4", "THIS26-011_D_prada_mode-nyc_lola-corfixen.mp4", "THIS26-011_E_prada_mode-nyc_empty-space.mp4"], ""],
-  ["ITA", "Prada", "SS27 M Celeb Arrival", "THIS26-010", "2026", ["THIS26-010_A_prada_celeb-arrival-ss27-m.mp4", "THIS26-010_B_prada_celeb-arrival-ss27-m.mp4", "THIS26-010_C_prada_celeb-arrival-ss27-m.mp4", "THIS26-010_D_prada_celeb-arrival-ss27-m.mp4", "THIS26-010_E_prada_celeb-arrival-ss27-m.mp4", "THIS26-010_F_prada_celeb-arrival-ss27-m.mp4"], ""],
+  ["ITA", "Prada", "SS27 M Celeb Arrivals", "THIS26-010", "2026", ["THIS26-010_prada_celeb-arrivals-ss27-m.mp4"], ""],
   ["ITA", "Prada", "Editorial FW26 Woman", "THIS26-009", "2026", ["THIS26-009_A_prada_editorial-fw26-woman.mp4", "THIS26-009_B_prada_editorial-fw26-woman.mp4", "THIS26-009_C_prada_editorial-fw26-woman.mp4"], ""],
   ["ITA", "Prada", "Prada Celeb Arrival FW26 W", "THIS26-008", "2026", ["THIS26-008_prada_celeb-arrival-fw26-w.mp4"], ""],
   ["USA", "Prada", "Prada Editorial FW26", "THIS26-007", "2026", ["THIS26-007_prada_editorial-fw26.mp4"], ""],
