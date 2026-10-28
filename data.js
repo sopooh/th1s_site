@@ -9,7 +9,6 @@ const data = [
   ["ITA", "Prada", "SS27 Post Show", "THIS26-023", "2026", ["THIS26-023_prada_ss27-post-show.mp4"], ""],
   ["FRA", "Miu Miu", "SS27 Tiktok Show", "THIS26-022", "2026", ["THIS26-022_A_miu-miu_ss27-tiktok-show_miumiu-1.mp4", "THIS26-022_B_miu-miu_ss27-tiktok-show_miumiu-2.mp4", "THIS26-022_C_miu-miu_ss27-tiktok-show_miumiu-3.mp4", "THIS26-022_D_miu-miu_ss27-tiktok-show_miumiu-4.mp4", "THIS26-022_E_miu-miu_ss27-tiktok-show_miumiu-5.mp4", "THIS26-022_F_miu-miu_ss27-tiktok-show_miumiu-6.mp4"], ""],
   ["GBR", "Church's", "Church's Club", "THIS26-021", "2026", ["THIS26-021_church-s_club.mp4"], ""],
-  ["ITA", "Prada", "SS27 Woman", "THIS26-020", "2026", ["THIS26-020_prada_ss27-woman.mp4"], ""],
   ["ITA", "Prada", "Sea Beyond", "THIS26-019", "2026", ["THIS26-019_prada_sea-beyond.mp4"], ""],
   ["FRA", "Prada", "Pradasphere Galleria", "THIS26-018", "2026", ["THIS26-018_A_prada_pradasphere-galleria_sana.mp4", "THIS26-018_B_prada_pradasphere-galleria_jaehyun.mp4", "THIS26-018_C_prada_pradasphere-galleria_leedohyun.mp4", "THIS26-018_D_prada_pradasphere-galleria_benedetta.mp4"], ""],
   ["GBR", "Church's", "SS26 Collateral", "THIS26-017", "2026", ["THIS26-017_A_church-s_ss26-collateral_new-formal-1.mp4", "THIS26-017_B_church-s_ss26-collateral_new-formal-2.mp4", "THIS26-017_C_church-s_ss26-collateral_new-formal-3.mp4", "THIS26-017_D_church-s_ss26-collateral_new-formal-4.mp4"], ""],
