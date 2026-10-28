@@ -3,6 +3,7 @@
 // [market, brand, titolo, id, anno, [file...], pagina]
 // pagina: file HTML scritto a mano (es. THIS25-007.html) oppure "" per la pagina automatica.
 const data = [
+  ["ITA", "Prada", "SS27 W Celeb Arrivals", "THIS26-026", "2026", ["THIS26-026_prada_celeb-arrivals-ss27-w.mp4"], ""],
   ["ITA", "Prada", "SS27 M Show", "THIS26-025", "2026", ["THIS26-025_A_prada_ss27-m-show.mp4", "THIS26-025_B_prada_ss27-m-show.mp4", "THIS26-025_C_prada_ss27-m-show.mp4", "THIS26-025_D_prada_ss27-m-show.mp4", "THIS26-025_E_prada_ss27-m-show.mp4"], ""],
   ["ITA", "Prada", "SS27 Show Woman", "THIS26-024", "2026", ["THIS26-024_A_prada_ss27-show-woman_benedetta-porcaroli.mp4", "THIS26-024_B_prada_ss27-show-woman_bo-bragason.mp4", "THIS26-024_C_prada_ss27-show-woman_charlie-damelio.mp4", "THIS26-024_D_prada_ss27-show-woman_chisa.mp4", "THIS26-024_E_prada_ss27-show-woman_chung.mp4", "THIS26-024_F_prada_ss27-show-woman_emilia-clarke.mp4", "THIS26-024_G_prada_ss27-show-woman_gabrielle-union-dwyane-wade.mp4", "THIS26-024_H_prada_ss27-show-woman_maya-hawke.mp4", "THIS26-024_I_prada_ss27-show-woman_naomi-ackie.mp4", "THIS26-024_J_prada_ss27-show-woman_naomi-watts.mp4", "THIS26-024_K_prada_ss27-show-woman_win-metawin.mp4", "THIS26-024_L_prada_ss27-show-woman_yang-mi.mp4"], ""],
   ["ITA", "Prada", "SS27 Post Show", "THIS26-023", "2026", ["THIS26-023_prada_ss27-post-show.mp4"], ""],
