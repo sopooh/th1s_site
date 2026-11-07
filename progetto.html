@@ -62,7 +62,7 @@ nav{display:flex;justify-content:space-between;align-items:baseline;padding-bott
 .track-bar .knob{position:absolute;top:50%;width:9px;height:9px;margin:-4px 0 0 -4px;border-radius:50%;background:#fff;left:0}
 
 /* ---------- riga metadati con filetti, come Prada Index ---------- */
-.metarow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid var(--ink);margin-top:24px}
+.metarow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--ink);margin-top:24px}
 .metarow > *{border-left:1px solid var(--ink);padding:2px 8px 4px;font-family:var(--mono);font-size:12px;color:var(--muted);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:8px;min-height:24px}
 .metarow > *:last-child{border-right:1px solid var(--ink)}
@@ -167,7 +167,6 @@ footer{display:flex;justify-content:space-between;margin-top:48px;padding-top:12
 
   <div class="body">
     <div>
-      <div class="pid" id="p-id"></div>
       <div class="pbrand" id="p-brand"></div>
       <h1 class="ptitle" id="p-title"></h1>
     </div>
@@ -231,13 +230,12 @@ if (idx < 0) {
 
   document.title = brand + " " + title + " · diz";
   $("crumb-brand").textContent = brand;
-  $("p-id").textContent = pid;
   $("p-brand").textContent = brand;
   $("p-title").textContent = title;
 
   // ----- riga metadati -----
   const mr = $("metarow");
-  mr.append(el("span", null, pid), el("span", null, market), el("span", null, year));
+  mr.append(el("span", null, market), el("span", null, year));
   const counter = el("span");
   if (files.length > 1) {
     const prev = el("button", null, "‹"); prev.setAttribute("aria-label", "Previous variant");
@@ -543,7 +541,7 @@ if (idx < 0) {
       }); v.loop = true; v.playsInline = true; v.preload = "none";
 
       m.append(v);
-      b.append(m, el("span", "l", tail || title), el("span", "s", pid + (letter ? "_" + letter : "")));
+      b.append(m, el("span", "l", tail || title), el("span", "s", letter || ""));
       b.setAttribute("aria-label", "Show variant " + (letter || i + 1));
       b.onclick = () => { show(i); window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); };
       row.append(b);

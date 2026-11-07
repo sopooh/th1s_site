@@ -154,7 +154,6 @@ footer{display:flex;justify-content:space-between;padding-top:12px;margin-top:48
         <button id="rnext" aria-label="Video successivo">&rsaquo;</button>
       </div>
       <div class="caption">
-        <div class="pid" id="p-id"></div>
         <div class="pbrand" id="p-brand"></div>
         <div class="ptitle" id="p-title"></div>
       </div>
@@ -182,7 +181,6 @@ footer{display:flex;justify-content:space-between;padding-top:12px;margin-top:48
 
 const list = document.getElementById("list");
 const stage = document.getElementById("stage");
-const pId = document.getElementById("p-id");
 const pBrand = document.getElementById("p-brand");
 const pTitle = document.getElementById("p-title");
 const thumb = document.getElementById("thumb");
@@ -250,7 +248,6 @@ function setActive(i){
   current = i;
   if (i < 0){ stage.classList.remove("active"); return; }
   const [,brand,title,id] = data[i];
-  pId.textContent = id;
   pBrand.textContent = brand;
   pTitle.textContent = title;
   els[i].classList.add("is-active");

@@ -73,7 +73,6 @@ footer{display:flex;justify-content:space-between;margin-top:96px;padding-top:12
   <video id="hv" muted loop playsinline autoplay preload="auto"></video>
   <div class="top"><span>FEATURED</span><span id="h-meta"></span></div>
   <div class="cap">
-    <div class="pid" id="h-id"></div>
     <div class="pbrand" id="h-brand"></div>
     <div class="ptitle" id="h-title"></div>
     <span class="go">View project</span>
@@ -144,8 +143,7 @@ function nextHero(){
   hv.classList.remove("ready");
   setTimeout(() => {                                   // dissolvenza: prima sparisce, poi cambia
     $("hero").href = pageOf(r);
-    $("h-id").textContent = id;
-    $("h-brand").textContent = brand;
+      $("h-brand").textContent = brand;
     $("h-title").textContent = title;
     $("h-meta").textContent = [brand, year, files.length > 1 ? pad(files.length) + " films" : ""].filter(Boolean).join(" \u00b7 ").toUpperCase();
     hv.src = "video/" + f;                             // loop HD: la hero e grande
@@ -180,7 +178,7 @@ rows.forEach(r => {
     m.append(v);
   }
   if (files.length > 1) m.append(el("span", "n", pad(files.length)));
-  a.append(m, el("span", "t", title), el("span", "b", brand + " · " + market), el("span", "y", id + " · " + year));
+  a.append(m, el("span", "t", title), el("span", "b", brand + " · " + market), el("span", "y", year));
   grid.append(a);
   cards.push(a);
 });
