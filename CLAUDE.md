@@ -1,4 +1,4 @@
-# th1s.prd — sito archivio
+# diz · sito archivio
 
 Sito statico. Un indice di 56 progetti video realizzati per brand di moda.
 HTML, CSS e JS puri in un file per pagina. Nessun framework, nessun build step,
@@ -41,7 +41,7 @@ contatori. Pesi 400 e 500, più il 700 riservato al solo logo. Mai sotto gli 11p
     etichette e metadati   11px, maiuscolo, letter-spacing .08em, muted
     righe indice           16px, ink
     titolo progetto        40-44px, peso 400
-    logo th1s.prd          15px, peso 700, letter-spacing -.02em
+    logo diz          15px, peso 700, letter-spacing -.02em
 
 Spaziature: solo 4, 8, 12, 16, 24, 48, 96.
 

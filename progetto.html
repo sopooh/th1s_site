@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>th1s.prd</title>
+<title>diz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
@@ -131,7 +131,7 @@ footer{display:flex;justify-content:space-between;margin-top:48px;padding-top:12
 <body>
 
 <nav>
-  <a class="wordmark" href="index.html">th1s.prd</a>
+  <a class="wordmark" href="index.html">diz</a>
   <div class="nav-links">
     <a href="index.html">Work</a>
     <a href="archive.html" aria-current="page">Index</a>
@@ -147,7 +147,7 @@ footer{display:flex;justify-content:space-between;margin-top:48px;padding-top:12
 
 <main id="page">
   <div class="hero" id="hero-box">
-    <span class="ph">th1s.prd</span>
+    <span class="ph">diz</span>
     <video id="hero" muted loop playsinline autoplay preload="auto"></video>
     <div class="zone" id="zone" aria-hidden="true"></div>
     <span class="badge l" id="badge-l">&#9664;&#9664; 2&times;</span>
@@ -187,7 +187,7 @@ footer{display:flex;justify-content:space-between;margin-top:48px;padding-top:12
 </main>
 
 <footer>
-  <span class="eyebrow">th1s.prd (24/26)</span>
+  <span class="eyebrow">diz (24/26)</span>
   <span class="eyebrow" style="text-align:right">Milano<br>[02]</span>
 </footer>
 
@@ -229,7 +229,7 @@ if (idx < 0) {
   const info = (typeof descrizioni !== "undefined" && descrizioni[pid]) || null;
   let cur = 0;
 
-  document.title = brand + " " + title + " — th1s.prd";
+  document.title = brand + " " + title + " · diz";
   $("crumb-brand").textContent = brand;
   $("p-id").textContent = pid;
   $("p-brand").textContent = brand;
@@ -529,7 +529,7 @@ if (idx < 0) {
       const { letter, tail: autoTail } = variantInfo(f);
       const tail = (info && info.nomi && info.nomi[letter]) || autoTail;
       const b = el("button", "card");
-      const m = el("span", "m"); m.append(el("span", "ph", "th1s.prd"));
+      const m = el("span", "m"); m.append(el("span", "ph", "diz"));
       const v = document.createElement("video");
       if (f.startsWith("vimeo:")) {
         const t = vmap[f] && vmap[f].thumb;
